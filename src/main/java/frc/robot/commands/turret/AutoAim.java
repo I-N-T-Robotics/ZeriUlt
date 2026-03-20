@@ -1,0 +1,80 @@
+package frc.robot.commands.turret;
+
+import java.util.function.Supplier;
+
+import frc.robot.Robot;
+import frc.robot.constants.Settings;
+import frc.robot.subsystems.Swerve.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Turret.Turret;
+
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj2.command.Command;
+
+public class AutoAim extends Command{
+  private final Turret turret;
+  private final CommandSwerveDrivetrain drive;
+  private final Supplier<Translation2d> targetPoseSupplier;
+
+  private static final double SHOOTER_OFFSET_ROTATIONS = 0; //TODO: FIND
+
+  public AutoAim(Turret turret, CommandSwerveDrivetrain drive, Supplier<Translation2d> targetPoseSupplier) {
+    this.turret = turret;
+    this.drive = drive;
+    this.targetPoseSupplier = targetPoseSupplier;
+    addRequirements(turret);
+  }
+
+  @Override
+  public void execute() {
+    Pose2d robotPose = drive.getPose();
+    Translation2d targetPose = targetPoseSupplier.get();
+
+    double dx = targetPose.getX() - robotPose.getX();
+    double dy = targetPose.getY() - robotPose.getY();
+    Rotation2d fieldAngleToTarget = new Rotation2d(dx, dy);
+
+    double fieldRotations = fieldAngleToTarget.getRotations();
+    double robotRotations = robotPose.getRotation().getRotations();
+    double robotRelativeRotations =
+        MathUtil.inputModulus(fieldRotations - robotRotations, Settings.Turret.Constants.TURRET_MIN_ROTATIONS, Settings.Turret.Constants.TURRET_MAX_ROTATIONS);
+
+    // so the flywheel can point at the target and not the left plate
+    double compensatedTarget = robotRelativeRotations + SHOOTER_OFFSET_ROTATIONS;
+
+    // track with post crt seeding internal encoder
+    double currentRotations = turret.getTurretRotations();
+
+    double finalTarget = findBestReachableTarget(compensatedTarget, currentRotations);
+
+    turret.setTarget(finalTarget);
+  }
+
+  private double findBestReachableTarget(double desiredTarget, double current) {
+    double[] candidates = {desiredTarget, desiredTarget + 1.0, desiredTarget - 1.0};
+
+    double bestTarget = current;
+    double shortestDistance = Double.MAX_VALUE;
+
+    for (double candidate : candidates) {
+      if (candidate >= Settings.Turret.Constants.TURRET_MIN_ROTATIONS && candidate <= Settings.Turret.Constants.TURRET_MAX_ROTATIONS) {
+        double distance = Math.abs(candidate - current);
+
+        if (distance < shortestDistance) {
+          shortestDistance = distance;
+          bestTarget = candidate;
+        }
+      }
+    }
+
+    return bestTarget;
+  }
+
+  @Override
+  public boolean isFinished() {
+    return false;
+  }
+}

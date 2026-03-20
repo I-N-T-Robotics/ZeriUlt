@@ -1,0 +1,265 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
+package frc.robot;
+
+import static edu.wpi.first.units.Units.*;
+
+import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
+import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.pathplanner.lib.auto.NamedCommands;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.commands.auton.DoNothingAuton;
+import frc.robot.commands.hood.HoodReset;
+import frc.robot.commands.intake.DeployIntake;
+import frc.robot.commands.intake.IntakeIntake;
+import frc.robot.commands.intake.IntakeOuttake;
+import frc.robot.commands.intake.IntakeStop;
+import frc.robot.commands.intake.ToggleIntake;
+import frc.robot.commands.intake.UndeployIntake;
+import frc.robot.commands.shooter.ShooterShoot;
+import frc.robot.commands.shooter.ShooterStart;
+import frc.robot.commands.shooter.ShooterStop;
+import frc.robot.commands.swerve.SwerveResetHeading;
+import frc.robot.commands.swerve.SwerveXMode;
+import frc.robot.commands.turret.AimTurret;
+import frc.robot.commands.turret.ResetTurret;
+import frc.robot.constants.Field;
+import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.Hood.Hood;
+import frc.robot.subsystems.Intake.Intake;
+import frc.robot.subsystems.Shooter.Shooter;
+import frc.robot.subsystems.Spindexer.Spindexer;
+import frc.robot.subsystems.Swerve.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Turret.Turret;
+import frc.robot.subsystems.Vision.LimelightVision;
+
+public class RobotContainer {
+    private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
+    private double MaxAngularRate = RotationsPerSecond.of(1).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+
+    /* Setting up bindings for necessary control of the swerve drive platform */
+    private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+            .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+            .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
+            
+    //Gamepads
+    private final CommandXboxController driver = new CommandXboxController(0);
+    private final CommandXboxController testControls = new CommandXboxController(1);
+    private final CommandPS5Controller AmanController = new CommandPS5Controller(2);
+
+    //subsystems
+    public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+    private final Turret turret = new Turret();
+    private final Shooter shooter = new Shooter();
+    private final Hood hood = new Hood();
+    private final Intake intake = new Intake();
+    private final Spindexer spindexer = new Spindexer();
+    private final LimelightVision limelightVision = new LimelightVision(drivetrain);
+
+    // Autons
+    private static SendableChooser<Command> autonChooser = new SendableChooser<>();
+
+    // Robot container
+
+    public RobotContainer() {
+        configureDefaultCommands();
+        configureButtonBindings();
+        configureAutons();
+
+        limelightVision.setDrivetrain(drivetrain);
+
+        NamedCommands.registerCommand("StartIntake", new IntakeIntake(intake));
+        NamedCommands.registerCommand("DeployIntake", new DeployIntake(intake));
+        NamedCommands.registerCommand("StopIntake", new IntakeStop(intake));
+        // NamedCommands.registerCommand("StartSpindexer", new SpindexerStart(spindexer, turret));
+        // NamedCommands.registerCommand("StopSpindexer", new SpindexerStop(spindexer));
+        NamedCommands.registerCommand("StartShooter", new ShooterStart(shooter));
+        NamedCommands.registerCommand("StopShooter", new ShooterStop(shooter));
+        NamedCommands.registerCommand("AimTurret", new AimTurret(turret));
+        NamedCommands.registerCommand("XMode", new SwerveXMode(drivetrain));
+        NamedCommands.registerCommand("resetHood", new HoodReset(hood));
+        NamedCommands.registerCommand("resetTurret", new ResetTurret(turret));
+        NamedCommands.registerCommand("wait", new WaitCommand(20));
+
+        SmartDashboard.putData("Field", Field.FIELD2D);
+    }
+
+    /****************/
+    /*** DEFAULTS ***/
+    /****************/
+
+    private void configureDefaultCommands() {
+        // turret.setDefaultCommand(new AimTurret(turret));
+        // shooter.setDefaultCommand(new ShooterShoot(shooter, drivetrain, turret));
+        // hood.setDefaultCommand(new HoodAim(hood, turret, drivetrain));
+        //TODO: for testing purposes 
+        
+        // drivetrain.setDefaultCommand(
+        // drivetrain.applyRequest(() ->
+        //     drive.withVelocityX((-testControls.getLeftY() * MaxSpeed)) // Drive forward with negative Y (forward)
+        //         .withVelocityY((-testControls.getLeftX() * MaxSpeed)) // Drive left with negative X (left)
+        //         .withRotationalRate((-testControls.getRightX() * MaxAngularRate)) // Drive counterclockwise with negative X (left)
+        // )
+        // ); 
+
+        drivetrain.setDefaultCommand(
+        drivetrain.applyRequest(() ->
+            drive.withVelocityX((-driver.getLeftY() * MaxSpeed)) // Drive forward with negative Y (forward)
+                .withVelocityY((-driver.getLeftX() * MaxSpeed)) // Drive left with negative X (left)
+                .withRotationalRate((-driver.getRightX() * MaxAngularRate)) // Drive counterclockwise with negative X (left)
+        )
+        ); 
+
+        drivetrain.setDefaultCommand(
+        drivetrain.applyRequest(() ->
+            drive.withVelocityX((-AmanController.getLeftY() * MaxSpeed)) // Drive forward with negative Y (forward)
+                .withVelocityY((-AmanController.getLeftX() * MaxSpeed)) // Drive left with negative X (left)
+                .withRotationalRate((-AmanController.getRightX() * MaxAngularRate)) // Drive counterclockwise with negative X (left)
+        )
+        ); 
+    }
+
+    /***************/
+    /*** BUTTONS ***/
+    /***************/
+
+    private void configureButtonBindings() {
+        //start intake
+        driver.rightTrigger()
+            .onTrue(new IntakeIntake(intake));
+
+        //stop intake
+        driver.rightBumper()
+            .onTrue(new IntakeStop(intake));
+
+        //outtake
+        driver.leftTrigger()
+            .onTrue(new IntakeOuttake(intake, spindexer));
+
+        //start spindexer, start shooter
+        // driver.y()
+        //     .onTrue(new SpindexerStart(spindexer, turret))
+        //     .onTrue(new ShooterStart(shooter));
+
+        // //stop spindexer, stop shooter
+        // driver.a()
+        //     .onTrue(new SpindexerStop(spindexer))
+        //     .onTrue(new ShooterStop(shooter));
+
+        //X-mode
+        driver.b()
+            .whileTrue(new SwerveXMode(drivetrain));
+
+        //reset hood
+        driver.start()
+            .onTrue(new HoodReset(hood));
+
+
+        testControls.y()
+            .whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
+
+        testControls.a()
+            .whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
+
+        testControls.x()
+            .whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
+
+        testControls.b()
+            .whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
+
+        testControls.leftBumper().onTrue(new DeployIntake(intake));
+        testControls.rightBumper().onTrue(new UndeployIntake(intake));
+
+        // testControls.start()
+        //     .whileTrue(new SequentialCommandGroup(
+        //         new DeployIntake(intake),
+        //         new ParallelCommandGroup(
+        //             new IntakeIntake(intake),
+        //             new SpindexerStart(spindexer, turret),
+        //             new ShooterStart(shooter),
+        //             new ShooterShootTest(shooter))));
+
+        AmanController.R2()
+            .whileTrue(new ShooterShoot(shooter, drivetrain, turret));
+
+        AmanController.L1()
+            .whileTrue(new IntakeOuttake(intake, spindexer));
+
+        AmanController.L2()
+            .onTrue(new ToggleIntake(intake));
+
+        AmanController.circle()
+            .onTrue(new ShooterStop(shooter));
+
+        AmanController.square()
+            .onTrue(new SwerveXMode(drivetrain));
+
+        AmanController.povDown()
+            .onTrue(new SwerveResetHeading(drivetrain));
+
+        //PS5 controller
+        // shoot = right trigger    -hold
+        // outtake = left bumper    -hold
+        // intake = left trigger    -make toggle
+        // stop shoot = circle      -toggle
+        // Xmode = square           -make toggle
+        // reset heading = down dpad    -toggle
+    }
+
+    /**************/
+    /*** AUTONS ***/
+    /**************/
+
+    public void configureAutons() {
+        autonChooser.setDefaultOption("Do Nothing", new DoNothingAuton());
+
+        SmartDashboard.putData("Autonomous", autonChooser);
+    }
+
+    public void configureSysids() {
+        SysIdRoutine turretSysid = turret.getSysIdRoutine();
+        autonChooser.addOption("SysID Turret Dynamic Forward", turretSysid.dynamic(Direction.kForward));
+        autonChooser.addOption("SysID Turret Dynamic Backwards", turretSysid.dynamic(Direction.kReverse));
+        autonChooser.addOption("SysID Turret Quasi Forwards", turretSysid.quasistatic(Direction.kForward));
+        autonChooser.addOption("SysID Turret Quasi Backwards", turretSysid.quasistatic(Direction.kReverse));
+    }
+
+    public Command getAutonomousCommand() {
+        return autonChooser.getSelected();
+    }
+
+    public boolean isInTopSide() {
+        return drivetrain.getPose().getX() <= Field.WIDTH / 2.0;
+    }
+
+    public boolean robotIsOnAllianceSide() {
+        Pose2d pose = drivetrain.getPose();
+        return Robot.isBlue()
+                ? pose.getX() < Units.inchesToMeters(182.11)
+                : pose.getX() > Units.inchesToMeters(469.11);
+    }
+
+    public Translation2d getGoalPosition() {
+        if (robotIsOnAllianceSide() && Robot.isHubActive()) {
+            return Field.hubCenter;
+        } else {
+            return isInTopSide() ? Field.topFerry : Field.bottomFerry;
+        }
+    }
+}
