@@ -5,17 +5,17 @@ import frc.robot.util.ShootInterpolation;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class ShooterShootTest extends Command {
+public class ShooterShootTest3 extends Command {
     private final Shooter shooter;
 
-    public ShooterShootTest(Shooter shooter) {
+    public ShooterShootTest3(Shooter shooter) {
         this.shooter = shooter;
         addRequirements(shooter);
     }
 
     @Override
     public void execute() {
-        shooter.setRightMotorRPM(2000);
+        shooter.setRightMotorRPM(6000);
     }
 
     @Override

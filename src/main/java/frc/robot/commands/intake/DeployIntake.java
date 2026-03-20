@@ -19,7 +19,7 @@ public class DeployIntake extends Command {
 
     @Override
     public boolean isFinished() {
-        return intake.intakeAtDeployPosition();
+        return false;
     }
 
     @Override

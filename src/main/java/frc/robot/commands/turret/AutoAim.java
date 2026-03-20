@@ -3,6 +3,8 @@ package frc.robot.commands.turret;
 import java.util.function.Supplier;
 
 import frc.robot.Robot;
+import frc.robot.RobotContainer;
+import frc.robot.constants.Field;
 import frc.robot.constants.Settings;
 import frc.robot.subsystems.Swerve.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Turret.Turret;
@@ -18,6 +20,7 @@ public class AutoAim extends Command{
   private final Turret turret;
   private final CommandSwerveDrivetrain drive;
   private final Supplier<Translation2d> targetPoseSupplier;
+  private boolean isFerrying = false;
 
   private static final double SHOOTER_OFFSET_ROTATIONS = 0; //TODO: FIND
 
@@ -35,6 +38,12 @@ public class AutoAim extends Command{
 
     double dx = targetPose.getX() - robotPose.getX();
     double dy = targetPose.getY() - robotPose.getY();
+    if (getIsFerrying()) {
+      double vx = drive.getChassisSpeeds().vxMetersPerSecond;
+      double shootWhileMovingFactor = 0.2;
+
+      dx += vx * shootWhileMovingFactor;
+    }
     Rotation2d fieldAngleToTarget = new Rotation2d(dx, dy);
 
     double fieldRotations = fieldAngleToTarget.getRotations();
@@ -52,6 +61,18 @@ public class AutoAim extends Command{
 
     turret.setTarget(finalTarget);
   }
+
+      public boolean robotIsOnAllianceSide() {
+        Pose2d pose = drive.getPose();
+        return Robot.isBlue()
+                ? pose.getX() < Units.inchesToMeters(182.11)
+                : pose.getX() > Units.inchesToMeters(469.11);
+    }
+
+    public boolean getIsFerrying() {
+        isFerrying = !robotIsOnAllianceSide();
+        return isFerrying;
+    }
 
   private double findBestReachableTarget(double desiredTarget, double current) {
     double[] candidates = {desiredTarget, desiredTarget + 1.0, desiredTarget - 1.0};

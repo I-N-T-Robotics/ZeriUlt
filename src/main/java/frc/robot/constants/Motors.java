@@ -459,7 +459,7 @@ public interface Motors {
         public static int LEFT_MOTOR = 22;
 
         public static TalonFXConfig shooterRightMotorConfig = new TalonFXConfig()
-            .withInvertedValue(InvertedValue.CounterClockwise_Positive)
+            .withInvertedValue(InvertedValue.Clockwise_Positive)
             .withNeutralMode(NeutralModeValue.Coast)
             
             .withSupplyCurrentLimitEnabled(false)
@@ -472,7 +472,7 @@ public interface Motors {
             .withVelocityTimeFilter(0.1);
 
         public static TalonFXConfig shooterLeftMotorConfig = new TalonFXConfig()
-            .withInvertedValue(InvertedValue.CounterClockwise_Positive)
+            .withInvertedValue(InvertedValue.Clockwise_Positive)
             .withNeutralMode(NeutralModeValue.Coast)
             
             .withSupplyCurrentLimitEnabled(false)
@@ -506,7 +506,7 @@ public interface Motors {
                 .withSensorToMechanismRatio(Settings.Intake.GEAR_RATIO);
 
         public static TalonFXConfig intakeDriveConfig = new TalonFXConfig()
-                .withInvertedValue(InvertedValue.Clockwise_Positive)
+                .withInvertedValue(InvertedValue.CounterClockwise_Positive)
                 .withNeutralMode(NeutralModeValue.Brake)
 
                 .withSupplyCurrentLimitAmps(60)
@@ -528,7 +528,7 @@ public interface Motors {
         public static int TRANSITION_MOTOR = 20;
 
         public static TalonFXConfig intakeSpindexerMotorConfig = new TalonFXConfig()
-            .withInvertedValue(InvertedValue.Clockwise_Positive)
+            .withInvertedValue(InvertedValue.CounterClockwise_Positive)
             .withNeutralMode(NeutralModeValue.Brake)
             
             .withSupplyCurrentLimitAmps(45)
@@ -554,7 +554,7 @@ public interface Motors {
             .withSensorToMechanismRatio(Settings.Spindexer.GEAR_RATIO);
 
         public static TalonFXConfig transitionMotorConfig = new TalonFXConfig()
-            .withInvertedValue(InvertedValue.CounterClockwise_Positive)
+            .withInvertedValue(InvertedValue.Clockwise_Positive)
             .withNeutralMode(NeutralModeValue.Brake)
             
             .withSupplyCurrentLimitAmps(80.0)

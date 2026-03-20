@@ -48,13 +48,13 @@ public class Intake extends SubsystemBase {
         isIntaking = !isIntaking;
 
         intakeMotor1.setControl(
-            power.withOutput(isIntaking ? 1 : 0)
+            power.withOutput(isIntaking ? 0.75 : 0)
         );
     }
 
     public void intake() {
         intakeMotor1.setControl(
-           power.withOutput(1)
+           power.withOutput(0.75)
         );
     }
 

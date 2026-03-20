@@ -49,11 +49,11 @@ public class Gains {
 
         public interface Intake {
             public interface Pivot {
-                double kP = 0;
+                double kP = 0.7;
                 double kI = 0;
                 double kD = 0;
 
-                double kS = 0;
+                double kS = 0.2;
                 double kV = 0;
                 double kA = 0;
 
@@ -72,7 +72,7 @@ public class Gains {
     }
 
     public interface Shooter {
-        double kP = 0;
+        double kP = 1;
         double kI = 0;
         double kD = 0;
 
@@ -82,7 +82,7 @@ public class Gains {
     }
 
     public interface Spindexer {
-        double kP = 0;
+        double kP = 0.8;
         double kI = 0;
         double kD = 0;
 
@@ -92,7 +92,7 @@ public class Gains {
     }
 
     public interface Transition {
-        double kP = 0;
+        double kP = 0.8;
         double kI = 0;
         double kD = 0;
 

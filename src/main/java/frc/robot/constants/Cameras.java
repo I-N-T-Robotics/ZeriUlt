@@ -7,7 +7,7 @@ public interface Cameras {
     
     public Camera[] LimelightCameras = new Camera[] {
         //inches, degrees (pitch assuming 0 is perpendicular) (yaw turning clockwise)
-        new Camera("turret", new Pose3d(6.771, 8.047, 13.13, new Rotation3d(0, -34, 225))),
+        // new Camera("turret", new Pose3d(6.771, 8.047, 13.13, new Rotation3d(0, -34, 225))),
         //new Camera("intake", new Pose3d(1.0, 12.828, 4.692, new Rotation3d(0, -34, 270)))
     };
 

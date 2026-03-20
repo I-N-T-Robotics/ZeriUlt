@@ -26,8 +26,10 @@ public class Hood extends SubsystemBase {
         hoodMotor = new TalonFX(Motors.HoodConstants.HOOD_MOTOR, Settings.upper);
         hoodMotor.setNeutralMode(NeutralModeValue.Brake);
 
-
         hoodEncoder = new CANcoder(Motors.HoodConstants.HOOD_ENCODER, Settings.upper);
+
+        hoodMotor.getConfigurator().apply(Motors.HoodConstants.hoodMotorConfigs.getConfiguration());
+        hoodEncoder.getConfigurator().apply(Motors.HoodConstants.hoodEncoderConfigs.getConfiguration());
     }
 
     public void setHoodAngle(double Angle) {

@@ -27,7 +27,6 @@ public class Turret extends SubsystemBase {
     private PositionVoltage targetPosition;
     private double targetPositionRotations;
 
-    private boolean aimingAtGoal = true;
     private boolean isSeeded = false;
     private boolean isFerrying = false;
 
@@ -51,6 +50,12 @@ public class Turret extends SubsystemBase {
         turretMotorEncoderEncoder = new CANcoder(TurretConstants.TURRET_ENCODER_ENCODER, Settings.upper);
 
         targetPosition = new PositionVoltage(0).withEnableFOC(true);
+
+        turretMotor.getConfigurator().apply(TurretConstants.turretConfigs.getConfiguration());
+        turretMotorEncoderTurret.getConfigurator().apply(TurretConstants.turretEncoderTurret.getConfiguration());
+        turretMotorEncoderEncoder.getConfigurator().apply(TurretConstants.turretEncoderEncoder.getConfiguration());
+
+        isFerrying = false;
 
         Optional.empty();
     }

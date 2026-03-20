@@ -41,6 +41,10 @@ public class Spindexer extends SubsystemBase {
         transitionMotor.setNeutralMode(NeutralModeValue.Coast);
 
         intakeSpindexMotor.setControl(new Follower(Motors.SpindexerConstants.FAR_SPINDEXER_MOTOR,  MotorAlignmentValue.Aligned));
+
+        intakeSpindexMotor.getConfigurator().apply(Motors.SpindexerConstants.intakeSpindexerMotorConfig.getConfiguration());
+        farSpindexMotor.getConfigurator().apply(Motors.SpindexerConstants.farSpindexerMotorConfig.getConfiguration());
+        transitionMotor.getConfigurator().apply(Motors.SpindexerConstants.transitionMotorConfig.getConfiguration());
     }
 
     public void startTransition() {

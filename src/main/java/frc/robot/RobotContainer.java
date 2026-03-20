@@ -11,19 +11,20 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.commands.Spindexer.SpindexerStart;
+import frc.robot.commands.Spindexer.SpindexerStop;
 import frc.robot.commands.auton.DoNothingAuton;
 import frc.robot.commands.hood.HoodReset;
 import frc.robot.commands.intake.DeployIntake;
@@ -33,11 +34,15 @@ import frc.robot.commands.intake.IntakeStop;
 import frc.robot.commands.intake.ToggleIntake;
 import frc.robot.commands.intake.UndeployIntake;
 import frc.robot.commands.shooter.ShooterShoot;
+import frc.robot.commands.shooter.ShooterShootTest;
+import frc.robot.commands.shooter.ShooterShootTest2;
+import frc.robot.commands.shooter.ShooterShootTest3;
 import frc.robot.commands.shooter.ShooterStart;
 import frc.robot.commands.shooter.ShooterStop;
 import frc.robot.commands.swerve.SwerveResetHeading;
 import frc.robot.commands.swerve.SwerveXMode;
 import frc.robot.commands.turret.AimTurret;
+import frc.robot.commands.turret.AutoAim;
 import frc.robot.commands.turret.ResetTurret;
 import frc.robot.constants.Field;
 import frc.robot.generated.TunerConstants;
@@ -52,6 +57,7 @@ import frc.robot.subsystems.Vision.LimelightVision;
 public class RobotContainer {
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(1).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+    private boolean isFerrying = false;
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
@@ -87,8 +93,8 @@ public class RobotContainer {
         NamedCommands.registerCommand("StartIntake", new IntakeIntake(intake));
         NamedCommands.registerCommand("DeployIntake", new DeployIntake(intake));
         NamedCommands.registerCommand("StopIntake", new IntakeStop(intake));
-        // NamedCommands.registerCommand("StartSpindexer", new SpindexerStart(spindexer, turret));
-        // NamedCommands.registerCommand("StopSpindexer", new SpindexerStop(spindexer));
+        NamedCommands.registerCommand("StartSpindexer", new SpindexerStart(spindexer, turret));
+        NamedCommands.registerCommand("StopSpindexer", new SpindexerStop(spindexer));
         NamedCommands.registerCommand("StartShooter", new ShooterStart(shooter));
         NamedCommands.registerCommand("StopShooter", new ShooterStop(shooter));
         NamedCommands.registerCommand("AimTurret", new AimTurret(turret));
@@ -105,7 +111,7 @@ public class RobotContainer {
     /****************/
 
     private void configureDefaultCommands() {
-        // turret.setDefaultCommand(new AimTurret(turret));
+        // turret.setDefaultCommand(new AutoAim(turret, drivetrain, () -> getGoalPosition()));
         // shooter.setDefaultCommand(new ShooterShoot(shooter, drivetrain, turret));
         // hood.setDefaultCommand(new HoodAim(hood, turret, drivetrain));
         //TODO: for testing purposes 
@@ -118,18 +124,11 @@ public class RobotContainer {
         // )
         // ); 
 
+        //TODO: perchanve invert
         drivetrain.setDefaultCommand(
         drivetrain.applyRequest(() ->
-            drive.withVelocityX((-driver.getLeftY() * MaxSpeed)) // Drive forward with negative Y (forward)
-                .withVelocityY((-driver.getLeftX() * MaxSpeed)) // Drive left with negative X (left)
-                .withRotationalRate((-driver.getRightX() * MaxAngularRate)) // Drive counterclockwise with negative X (left)
-        )
-        ); 
-
-        drivetrain.setDefaultCommand(
-        drivetrain.applyRequest(() ->
-            drive.withVelocityX((-AmanController.getLeftY() * MaxSpeed)) // Drive forward with negative Y (forward)
-                .withVelocityY((-AmanController.getLeftX() * MaxSpeed)) // Drive left with negative X (left)
+            drive.withVelocityX((AmanController.getLeftY() * MaxSpeed)) // Drive forward with negative Y (forward)
+                .withVelocityY((AmanController.getLeftX() * MaxSpeed)) // Drive left with negative X (left)
                 .withRotationalRate((-AmanController.getRightX() * MaxAngularRate)) // Drive counterclockwise with negative X (left)
         )
         ); 
@@ -152,15 +151,15 @@ public class RobotContainer {
         driver.leftTrigger()
             .onTrue(new IntakeOuttake(intake, spindexer));
 
-        //start spindexer, start shooter
-        // driver.y()
-        //     .onTrue(new SpindexerStart(spindexer, turret))
-        //     .onTrue(new ShooterStart(shooter));
+        // start spindexer, start shooter
+        driver.y()
+            .onTrue(new SpindexerStart(spindexer, turret))
+            .onTrue(new ShooterStart(shooter));
 
-        // //stop spindexer, stop shooter
-        // driver.a()
-        //     .onTrue(new SpindexerStop(spindexer))
-        //     .onTrue(new ShooterStop(shooter));
+        //stop spindexer, stop shooter
+        driver.a()
+            .onTrue(new SpindexerStop(spindexer))
+            .onTrue(new ShooterStop(shooter));
 
         //X-mode
         driver.b()
@@ -196,22 +195,45 @@ public class RobotContainer {
         //             new ShooterShootTest(shooter))));
 
         AmanController.R2()
-            .whileTrue(new ShooterShoot(shooter, drivetrain, turret));
+            // .whileTrue(new ShooterShoot(shooter, drivetrain, turret));
+            .whileTrue(new ShooterShootTest(shooter));
 
         AmanController.L1()
             .whileTrue(new IntakeOuttake(intake, spindexer));
 
-        AmanController.L2()
-            .onTrue(new ToggleIntake(intake));
+        AmanController.triangle()
+            .toggleOnTrue(new IntakeIntake(intake));
 
         AmanController.circle()
             .onTrue(new ShooterStop(shooter));
 
         AmanController.square()
-            .onTrue(new SwerveXMode(drivetrain));
+            .toggleOnTrue(new ParallelCommandGroup(
+                new SpindexerStart(spindexer, turret),
+                new ShooterShootTest(shooter)
+            ));
+
+        AmanController.options()
+            .onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
 
         AmanController.povDown()
-            .onTrue(new SwerveResetHeading(drivetrain));
+            .onTrue(new DeployIntake(intake));
+
+        AmanController.povUp()
+            .onTrue(new UndeployIntake(intake));
+
+        AmanController.povLeft()
+            .toggleOnTrue(new ParallelCommandGroup(
+                new SpindexerStart(spindexer, turret),
+                new ShooterShootTest2(shooter)
+            ));
+
+        AmanController.povRight()
+            .toggleOnTrue(new ParallelCommandGroup(
+
+                new SpindexerStart(spindexer, turret),
+                new ShooterShootTest3(shooter)
+            ));
 
         //PS5 controller
         // shoot = right trigger    -hold
@@ -261,5 +283,10 @@ public class RobotContainer {
         } else {
             return isInTopSide() ? Field.topFerry : Field.bottomFerry;
         }
+    }
+
+    public boolean getIsFerrying() {
+        isFerrying = !robotIsOnAllianceSide();
+        return isFerrying;
     }
 }
