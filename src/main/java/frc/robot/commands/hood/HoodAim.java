@@ -2,7 +2,6 @@ package frc.robot.commands.hood;
 
 import frc.robot.subsystems.Hood.Hood;
 import frc.robot.subsystems.Swerve.CommandSwerveDrivetrain;
-import frc.robot.subsystems.Turret.Turret;
 import frc.robot.util.Distance;
 import frc.robot.util.HoodInterpolation;
 
@@ -12,14 +11,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public class HoodAim extends Command {
     private final Hood hood;
-    private final Turret turret;
     private final CommandSwerveDrivetrain drivetrain;
 
-    public HoodAim(Hood hood, Turret turret, CommandSwerveDrivetrain drivetrain) {
+    public HoodAim(Hood hood, CommandSwerveDrivetrain drivetrain) {
         this.hood = hood;
-        this.turret = turret;
         this.drivetrain = drivetrain;
-        addRequirements(hood, turret, drivetrain);
+        addRequirements(hood, drivetrain);
     }
 
     @Override

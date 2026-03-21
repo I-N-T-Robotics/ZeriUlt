@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.Spindexer.SpindexerStart;
 import frc.robot.commands.Spindexer.SpindexerStop;
 import frc.robot.commands.auton.DoNothingAuton;
+import frc.robot.commands.hood.HoodAim;
 import frc.robot.commands.hood.HoodReset;
 import frc.robot.commands.intake.DeployIntake;
 import frc.robot.commands.intake.IntakeIntake;
@@ -194,45 +195,43 @@ public class RobotContainer {
         //             new ShooterStart(shooter),
         //             new ShooterShootTest(shooter))));
 
-        AmanController.R2()
-            // .whileTrue(new ShooterShoot(shooter, drivetrain, turret));
-            .whileTrue(new ShooterShootTest(shooter));
+        AmanController.L2()
+            .whileTrue(new ParallelCommandGroup(
+                new IntakeIntake(intake),
+                new DeployIntake(intake)
+            ));
+
+        AmanController.povUp()
+            .toggleOnTrue(new UndeployIntake(intake));
 
         AmanController.L1()
-            .whileTrue(new IntakeOuttake(intake, spindexer));
+            .toggleOnTrue(new IntakeOuttake(intake, spindexer));
 
-        AmanController.triangle()
-            .toggleOnTrue(new IntakeIntake(intake));
+        AmanController.povDown()
+            .onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
 
-        AmanController.circle()
-            .onTrue(new ShooterStop(shooter));
+        AmanController.R1()
+            .toggleOnTrue(new SwerveXMode(drivetrain));
+
+        AmanController.cross()
+            .toggleOnTrue(new ParallelCommandGroup(
+                new ShooterShootTest(shooter),
+                new SpindexerStart(spindexer, turret)
+                //,new HoodAim(hood, drivetrain)
+            ));
 
         AmanController.square()
             .toggleOnTrue(new ParallelCommandGroup(
-                new SpindexerStart(spindexer, turret),
-                new ShooterShootTest(shooter)
+                new ShooterShootTest2(shooter),
+                new SpindexerStart(spindexer, turret)
+                //,new HoodAim(hood, drivetrain)
             ));
 
-        AmanController.options()
-            .onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
-
-        AmanController.povDown()
-            .onTrue(new DeployIntake(intake));
-
-        AmanController.povUp()
-            .onTrue(new UndeployIntake(intake));
-
-        AmanController.povLeft()
+        AmanController.triangle()
             .toggleOnTrue(new ParallelCommandGroup(
-                new SpindexerStart(spindexer, turret),
-                new ShooterShootTest2(shooter)
-            ));
-
-        AmanController.povRight()
-            .toggleOnTrue(new ParallelCommandGroup(
-
-                new SpindexerStart(spindexer, turret),
-                new ShooterShootTest3(shooter)
+                new ShooterShootTest3(shooter),
+                new SpindexerStart(spindexer, turret)
+                //,new HoodAim(hood, drivetrain)
             ));
 
         //PS5 controller

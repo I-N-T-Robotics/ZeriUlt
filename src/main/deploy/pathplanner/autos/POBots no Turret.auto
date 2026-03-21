@@ -11,15 +11,9 @@
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "resetTurret"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AimTurret"
+            "pathName": "POBots1"
           }
         },
         {
@@ -35,40 +29,28 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "StartShooter"
+                  "name": "StartSpindexer"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "StartSpindexer"
+                  "name": "StartShooter"
                 }
               }
             ]
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "StopSpindexer"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "StopShooter"
+            "pathName": "POBots2"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "HighTide1"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "HighTide2"
+            "pathName": "POBots3 mod"
           }
         },
         {
@@ -84,56 +66,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "StartShooter"
+                  "name": "StartSpindexer"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "StartSpindexer"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "StopSpindexer"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "StopShooter"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Hightide3"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "HighTide4"
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
                   "name": "StartShooter"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "StartSpindexer"
                 }
               }
             ]
