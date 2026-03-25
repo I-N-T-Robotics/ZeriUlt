@@ -4,10 +4,15 @@
   "holonomicMode": true,
   "pathFolders": [
     "HighTide",
-    "POBots",
-    "Orbit"
+    "Ferry",
+    "Orbit",
+    "POBots"
   ],
-  "autoFolders": [],
+  "autoFolders": [
+    "Ferry",
+    "Middle Autos",
+    "Side Autos"
+  ],
   "defaultMaxVel": 4.0,
   "defaultMaxAccel": 4.0,
   "defaultMaxAngVel": 540.0,

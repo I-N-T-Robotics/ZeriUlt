@@ -17,8 +17,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -32,7 +30,6 @@ import frc.robot.commands.intake.DeployIntake;
 import frc.robot.commands.intake.IntakeIntake;
 import frc.robot.commands.intake.IntakeOuttake;
 import frc.robot.commands.intake.IntakeStop;
-import frc.robot.commands.intake.ToggleIntake;
 import frc.robot.commands.intake.UndeployIntake;
 import frc.robot.commands.shooter.ShooterShoot;
 import frc.robot.commands.shooter.ShooterShootTest;
@@ -40,9 +37,7 @@ import frc.robot.commands.shooter.ShooterShootTest2;
 import frc.robot.commands.shooter.ShooterShootTest3;
 import frc.robot.commands.shooter.ShooterStart;
 import frc.robot.commands.shooter.ShooterStop;
-import frc.robot.commands.swerve.SwerveResetHeading;
 import frc.robot.commands.swerve.SwerveXMode;
-import frc.robot.commands.turret.AimTurret;
 import frc.robot.commands.turret.AutoAim;
 import frc.robot.commands.turret.ResetTurret;
 import frc.robot.constants.Field;
@@ -98,11 +93,10 @@ public class RobotContainer {
         NamedCommands.registerCommand("StopSpindexer", new SpindexerStop(spindexer));
         NamedCommands.registerCommand("StartShooter", new ShooterStart(shooter));
         NamedCommands.registerCommand("StopShooter", new ShooterStop(shooter));
-        NamedCommands.registerCommand("AimTurret", new AimTurret(turret));
+        NamedCommands.registerCommand("AimTurret", new AutoAim(turret, drivetrain, () -> getGoalPosition()));
         NamedCommands.registerCommand("XMode", new SwerveXMode(drivetrain));
         NamedCommands.registerCommand("resetHood", new HoodReset(hood));
         NamedCommands.registerCommand("resetTurret", new ResetTurret(turret));
-        NamedCommands.registerCommand("wait", new WaitCommand(20));
 
         SmartDashboard.putData("Field", Field.FIELD2D);
     }
@@ -115,7 +109,7 @@ public class RobotContainer {
         // turret.setDefaultCommand(new AutoAim(turret, drivetrain, () -> getGoalPosition()));
         // shooter.setDefaultCommand(new ShooterShoot(shooter, drivetrain, turret));
         // hood.setDefaultCommand(new HoodAim(hood, turret, drivetrain));
-        //TODO: for testing purposes 
+        //TODO: commented out for testing purposes 
         
         // drivetrain.setDefaultCommand(
         // drivetrain.applyRequest(() ->
@@ -125,7 +119,6 @@ public class RobotContainer {
         // )
         // ); 
 
-        //TODO: perchanve invert
         drivetrain.setDefaultCommand(
         drivetrain.applyRequest(() ->
             drive.withVelocityX((AmanController.getLeftY() * MaxSpeed)) // Drive forward with negative Y (forward)

@@ -1,7 +1,6 @@
 package frc.robot.commands.shooter;
 
 import frc.robot.subsystems.Shooter.Shooter;
-import frc.robot.util.ShootInterpolation;
 
 import edu.wpi.first.wpilibj2.command.Command;
 

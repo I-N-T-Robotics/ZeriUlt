@@ -16,7 +16,7 @@ public class HoodAim extends Command {
     public HoodAim(Hood hood, CommandSwerveDrivetrain drivetrain) {
         this.hood = hood;
         this.drivetrain = drivetrain;
-        addRequirements(hood, drivetrain);
+        addRequirements(hood);
     }
 
     @Override

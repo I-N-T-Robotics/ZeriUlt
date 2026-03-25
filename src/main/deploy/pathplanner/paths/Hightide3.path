@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 7.432,
-        "y": 7.036
+        "x": 7.172453488901019,
+        "y": 6.992491414210336
       },
       "prevControl": {
-        "x": 6.880872870180419,
-        "y": 7.579447225383321
+        "x": 6.425169475527656,
+        "y": 7.425600254730715
       },
       "nextControl": {
-        "x": 7.8599423837487965,
-        "y": 6.61402095290003
+        "x": 7.692432602235073,
+        "y": 6.691123330803462
       },
       "isLocked": false,
       "linkedName": null
@@ -45,18 +45,26 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 1.1696847406181037,
+      "maxWaypointRelativePos": 2.0,
+      "constraints": {
+        "maxVelocity": 2.0,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
   "pointTowardsZones": [],
   "eventMarkers": [
     {
       "name": "StartIntake",
       "waypointRelativePos": 0.7022282241728621,
-      "endWaypointRelativePos": null,
-      "command": null
-    },
-    {
-      "name": "DeployIntake",
-      "waypointRelativePos": 0.7346387575962169,
       "endWaypointRelativePos": null,
       "command": null
     }
@@ -77,7 +85,7 @@
   "folder": "HighTide",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

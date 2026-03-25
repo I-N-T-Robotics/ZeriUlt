@@ -27,9 +27,9 @@
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "wait",
                 "data": {
-                  "name": "wait"
+                  "waitTime": 10.0
                 }
               },
               {
@@ -76,9 +76,9 @@
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "wait",
                 "data": {
-                  "name": "wait"
+                  "waitTime": 10.0
                 }
               },
               {
@@ -143,6 +143,6 @@
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Side Autos",
   "choreoAuto": false
 }

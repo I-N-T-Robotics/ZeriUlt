@@ -19,7 +19,7 @@ public class ShooterShoot extends Command {
         this.shooter = shooter;
         this.drivetrain = drivetrain;
         this.turret = turret;
-        addRequirements(shooter, drivetrain, turret);
+        addRequirements(shooter, turret);
     }
 
     @Override

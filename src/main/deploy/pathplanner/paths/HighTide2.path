@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 7.432,
-        "y": 7.039
+        "x": 7.126626808133187,
+        "y": 6.9696528725436675
       },
       "prevControl": {
-        "x": 7.773603484395388,
-        "y": 6.611930274848342
+        "x": 7.618783786064547,
+        "y": 6.7311932328440855
       },
       "nextControl": {
-        "x": 6.9234734920851535,
-        "y": 7.674755447143378
+        "x": 6.414742483169578,
+        "y": 7.314574690684134
       },
       "isLocked": false,
       "linkedName": null
@@ -36,8 +36,8 @@
         "y": 7.414
       },
       "prevControl": {
-        "x": 4.636477779294032,
-        "y": 7.371421715793304
+        "x": 4.644905101437409,
+        "y": 7.474643945596799
       },
       "nextControl": null,
       "isLocked": false,
@@ -50,7 +50,7 @@
   "eventMarkers": [
     {
       "name": "StopIntake",
-      "waypointRelativePos": 1.591025110375276,
+      "waypointRelativePos": 1.1280353200883009,
       "endWaypointRelativePos": null,
       "command": null
     }
@@ -65,7 +65,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": "HighTide",

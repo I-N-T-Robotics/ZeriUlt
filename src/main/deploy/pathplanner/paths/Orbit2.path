@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 7.356458333333333,
-        "y": 1.2335885757823872
+        "x": 7.336162948053129,
+        "y": 1.1316129912663757
       },
       "prevControl": {
-        "x": 7.755876643661246,
-        "y": 1.6919973437289657
+        "x": 7.735581258381042,
+        "y": 1.5900217592129542
       },
       "nextControl": {
-        "x": 6.778285145531507,
-        "y": 0.5700244580973723
+        "x": 6.757989760251303,
+        "y": 0.4680488735813608
       },
       "isLocked": false,
       "linkedName": null
@@ -50,7 +50,7 @@
   "eventMarkers": [
     {
       "name": "StopIntake",
-      "waypointRelativePos": 1.521264486754968,
+      "waypointRelativePos": 0.0,
       "endWaypointRelativePos": null,
       "command": null
     }
@@ -65,7 +65,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": "Orbit",

@@ -35,19 +35,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "StartSpindexer"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
                   "name": "StartShooter"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "XMode"
+                  "name": "StartSpindexer"
                 }
               }
             ]
@@ -68,13 +62,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Orbit1"
+            "pathName": "HighTide1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Orbit2"
+            "pathName": "HighTide2"
           }
         },
         {
@@ -90,19 +84,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "StartSpindexer"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
                   "name": "StartShooter"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "XMode"
+                  "name": "StartSpindexer"
                 }
               }
             ]
@@ -123,13 +111,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Orbit3"
+            "pathName": "Hightide3"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Orbit4"
+            "pathName": "Hightide4 mod"
           }
         },
         {
@@ -139,13 +127,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "StartSpindexer"
+                  "name": "StartShooter"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "StartShooter"
+                  "name": "StartSpindexer"
                 }
               }
             ]
