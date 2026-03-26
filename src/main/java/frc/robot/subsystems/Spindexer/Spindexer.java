@@ -28,8 +28,6 @@ public class Spindexer extends SubsystemBase {
 
     private TalonFX transitionMotor;
 
-    private boolean isStalling;
-
     private final VelocityVoltage velocityVoltage = new VelocityVoltage(0).withEnableFOC(true);
 
     public Spindexer() {
@@ -106,5 +104,6 @@ public class Spindexer extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("Spindexer/SpindexerRPM", getSpindexerRPM());
         SmartDashboard.putNumber("Spindexer/TransitionRPM", getTransitionRPM());
+        SmartDashboard.putBoolean("Spindexer/SpindexerIsStalling", getIsStalling());
     }
 }
