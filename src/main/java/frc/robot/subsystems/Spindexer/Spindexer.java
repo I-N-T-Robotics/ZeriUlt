@@ -28,6 +28,8 @@ public class Spindexer extends SubsystemBase {
 
     private TalonFX transitionMotor;
 
+    private boolean isStalling;
+
     private final VelocityVoltage velocityVoltage = new VelocityVoltage(0).withEnableFOC(true);
 
     public Spindexer() {
@@ -47,6 +49,11 @@ public class Spindexer extends SubsystemBase {
         transitionMotor.getConfigurator().apply(Motors.SpindexerConstants.transitionMotorConfig.getConfiguration());
     }
 
+    public boolean getIsStalling() {
+        return (transitionMotor.getSupplyCurrent().getValueAsDouble() > Settings.Spindexer.STALL_CURRENT_LIMIT) ||
+                (farSpindexMotor.getSupplyCurrent().getValueAsDouble() > Settings.Spindexer.STALL_CURRENT_LIMIT);
+    }
+
     public void startTransition() {
         transitionMotor.setControl(
             velocityVoltage
@@ -57,6 +64,12 @@ public class Spindexer extends SubsystemBase {
         transitionMotor.setControl(
             velocityVoltage
             .withVelocity(0));
+    }
+
+    public void reverseTransition() {
+        transitionMotor.setControl(
+            velocityVoltage
+            .withVelocity(-1 * Settings.Spindexer.SPINDEXER_RPM * Settings.Spindexer.TRANSITION_TO_SPEED_RATIO));
     }
 
     public double getTransitionRPM() {

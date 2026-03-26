@@ -16,11 +16,16 @@ public class SpindexerStart extends Command {
 
     @Override
     public void execute() {
-        spindexer.startTransition();
         // if (spindexer.transitionAtSpeed() && turret.atTarget()) {
         //     spindexer.startSpindexer();
         // }
-        spindexer.startSpindexer();
+        if (spindexer.getIsStalling()) {
+            spindexer.reverseSpindexer();
+            spindexer.reverseTransition();
+        } else {
+            spindexer.startTransition();
+            spindexer.startSpindexer();
+        }
     }
 
     @Override

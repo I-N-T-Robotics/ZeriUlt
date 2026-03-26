@@ -226,14 +226,6 @@ public class RobotContainer {
                 new SpindexerStart(spindexer, turret)
                 //,new HoodAim(hood, drivetrain)
             ));
-
-        //PS5 controller
-        // shoot = right trigger    -hold
-        // outtake = left bumper    -hold
-        // intake = left trigger    -make toggle
-        // stop shoot = circle      -toggle
-        // Xmode = square           -make toggle
-        // reset heading = down dpad    -toggle
     }
 
     /**************/

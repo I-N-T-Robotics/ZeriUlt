@@ -80,6 +80,7 @@ public interface Settings {
         public final double SPINDEXER_RPM = 5000;
         public final double TRANSITION_TO_SPEED_RATIO = 1;
         public final double TRANSITION_MIN_SPEED = 4800;
+        public final double STALL_CURRENT_LIMIT = 40; //TODO: random number
         public final double GEAR_RATIO = 5; //motor to mech
     }//16 - 60 - 18 - 24T
 

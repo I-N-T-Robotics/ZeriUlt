@@ -428,7 +428,7 @@ public interface Motors {
             .withInvertedValue(InvertedValue.Clockwise_Positive)
             .withNeutralMode(NeutralModeValue.Brake)
             
-            .withSupplyCurrentLimitAmps(80)
+            .withSupplyCurrentLimitAmps(60)
             .withStatorCurrentLimitEnabled(false)
             .withRampRate(0.25)
             
@@ -509,7 +509,7 @@ public interface Motors {
                 .withInvertedValue(InvertedValue.CounterClockwise_Positive)
                 .withNeutralMode(NeutralModeValue.Brake)
 
-                .withSupplyCurrentLimitAmps(60)
+                .withSupplyCurrentLimitAmps(80)
                 .withStatorCurrentLimitEnabled(false)
                 .withRampRate(0.25)
 
@@ -531,7 +531,7 @@ public interface Motors {
             .withInvertedValue(InvertedValue.CounterClockwise_Positive)
             .withNeutralMode(NeutralModeValue.Brake)
             
-            .withSupplyCurrentLimitAmps(45)
+            .withSupplyCurrentLimitAmps(80)
             .withStatorCurrentLimitEnabled(false)
             .withRampRate(0.25)
             
@@ -544,7 +544,7 @@ public interface Motors {
             .withInvertedValue(InvertedValue.Clockwise_Positive)
             .withNeutralMode(NeutralModeValue.Brake)
             
-            .withSupplyCurrentLimitAmps(45)
+            .withSupplyCurrentLimitAmps(80)
             .withStatorCurrentLimitEnabled(false)
             .withRampRate(0.25)
             
@@ -574,7 +574,7 @@ public interface Motors {
         public static TalonFXConfig hoodMotorConfigs = new TalonFXConfig()
                 .withInvertedValue(InvertedValue.CounterClockwise_Positive)
                 .withNeutralMode(NeutralModeValue.Brake)
-                .withSupplyCurrentLimitAmps(80.0)
+                .withSupplyCurrentLimitAmps(60.0)
                 .withStatorCurrentLimitEnabled(false)
                 .withRampRate(0.25)
                 .withPIDConstants(Gains.Hood.kP, Gains.Hood.kI, Gains.Hood.kD, 0)
