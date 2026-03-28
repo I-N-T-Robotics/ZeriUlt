@@ -148,7 +148,7 @@ import frc.robot.util.SysId;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.NeutralModeValue;
+
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -176,7 +176,6 @@ public class Turret extends SubsystemBase {
 
     public Turret() {
         turretMotor = new TalonFX(TurretConstants.TURRET_MOTOR, Settings.upper);
-        turretMotor.setNeutralMode(NeutralModeValue.Brake);
 
         turretEncoder = new CANcoder(TurretConstants.TURRET_ENCODER_TURRET, Settings.upper);
 
@@ -194,7 +193,6 @@ public class Turret extends SubsystemBase {
 
         // Absolute encoder (0–1)
         double abs = turretEncoder.getAbsolutePosition().getValueAsDouble();
-        abs = MathUtil.inputModulus(abs, 0, 1);
 
         // Convert to turret rotation (within 1 turn)
         double turretFromAbs = abs / GEAR_TO_TURRET_RATIO;
@@ -203,25 +201,10 @@ public class Turret extends SubsystemBase {
         double motorRotations = turretMotor.getPosition().getValueAsDouble();
 
         // Find closest rotation match
-        double wraps = (motorRotations / GEAR_TO_TURRET_RATIO) % 10;
+        double wraps = (motorRotations / GEAR_TO_TURRET_RATIO) * 10;
+        SmartDashboard.putNumber("Turret/wraps", wraps);
 
-        return turretFromAbs + wraps;
-
-        // double abs = turretEncoder.getAbsolutePosition().getValueAsDouble();
-
-        // // Convert to fractional turret rotations
-        // double turretFromAbs = abs / GEAR_TO_TURRET_RATIO;
-
-        // // Detect crossing
-        // double delta = turretFromAbs - lastTurretFromAbs;
-        // if (delta < -0.5)
-        // wraps += 1; // crossed 0→1 forward
-        // else if (delta > 0.5)
-        // wraps -= 1; // crossed 1→0 backward
-
-        // lastTurretFromAbs = turretFromAbs;
-
-        // return turretFromAbs + wraps;
+        return (turretFromAbs + (wraps * GEAR_TO_TURRET_RATIO)) / 11;
     }
 
     public Rotation2d getAbsoluteTurretRotation2d() {
@@ -230,23 +213,20 @@ public class Turret extends SubsystemBase {
 
     // --- SEED MOTOR ENCODER FROM ABSOLUTE ---
     public void setCurrentPosition() {
-        double motorRotations = getAbsoluteTurretRotations() * MOTOR_TO_TURRET;
+        double lastTurretFromAbs = turretEncoder.getAbsolutePosition().getValueAsDouble() / GEAR_TO_TURRET_RATIO;
+        double motorRotations = lastTurretFromAbs * MOTOR_TO_TURRET;
         turretMotor.setPosition(motorRotations);
-
-        // lastTurretFromAbs = turretEncoder.getAbsolutePosition().getValueAsDouble() / GEAR_TO_TURRET_RATIO;
-        // wraps = 0;
-        // double motorRotations = lastTurretFromAbs * MOTOR_TO_TURRET;
-        // turretMotor.setPosition(motorRotations);
     }
 
     public void reset() {
-        setCurrentPosition();
+        turretMotor.setPosition(0);
+        turretEncoder.setPosition(0);
     }
 
     // --- CONTROL ---
     public boolean atTarget() {
-        return Math.abs(getTurretRotations()
-                - targetPositionRotations) < (Units.radiansToDegrees(Settings.Turret.Constants.toleranceRadians)
+        return Math.abs(getAbsoluteTurretRotations()
+                - targetPositionRotations) < (Units.radiansToDegrees(Settings.Turret.Constants.toleranceRotations)
                         / 360.0);
     }
 
@@ -276,10 +256,11 @@ public class Turret extends SubsystemBase {
         SmartDashboard.putNumber("Turret/turretPosition", getTurretRotations());
         SmartDashboard.putNumber("Turret/targetTurretPosition", targetPositionRotations);
         SmartDashboard.putNumber("Turret/turretEncoder", turretEncoder.getAbsolutePosition().getValueAsDouble());
+        SmartDashboard.putBoolean("Turret/isSeeded", isSeeded);
 
         // Seed once when stationary
         if (!isSeeded && Math.abs(turretMotor.getRotorVelocity().getValueAsDouble()) < 1) {
-            setCurrentPosition();
+            reset();
             isSeeded = true;
         }
 

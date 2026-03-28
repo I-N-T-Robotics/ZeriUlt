@@ -38,15 +38,16 @@ public interface Settings {
     public interface Turret {
         public interface Constants {
            public final Transform2d TURRET_OFFSET = new Transform2d(5.65, 4.45, new Rotation2d(Math.toRadians(90))); //inches
-            public final double toleranceRadians = Units.degreesToRadians(5);
-            public final double TURRET_MIN_ROTATIONS = -0.375;
-            public final double TURRET_MAX_ROTATIONS = 0.375;
+            public final double toleranceRadians = Units.degreesToRadians(15);
+            public final double toleranceRotations = Units.degreesToRotations(15);
+            public final double TURRET_MIN_ROTATIONS = 0.1;
+            public final double TURRET_MAX_ROTATIONS = 0.9;
             public final double GEAR_RATIO_MOTOR_TO_MECH = 48.57;
         }
 
         public interface SoftwareLimit {
-            public final double FORWARD_MAX_ROTATIONS = 0.375;
-            public final double BACKWARDS_MAX_ROTATIONS = 0.375;
+            public final double FORWARD_MAX_ROTATIONS = 0.9;
+            public final double BACKWARDS_MAX_ROTATIONS = 0;
         }
 
         public interface Encoder {

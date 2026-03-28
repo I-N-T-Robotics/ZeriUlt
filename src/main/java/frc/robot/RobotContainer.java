@@ -106,7 +106,7 @@ public class RobotContainer {
     /****************/
 
     private void configureDefaultCommands() {
-        // turret.setDefaultCommand(new AutoAim(turret, drivetrain, () -> getGoalPosition()));
+        turret.setDefaultCommand(new AutoAim(turret, drivetrain, () -> getGoalPosition()));
         // shooter.setDefaultCommand(new ShooterShoot(shooter, drivetrain, turret));
         // hood.setDefaultCommand(new HoodAim(hood, turret, drivetrain));
         //TODO: commented out for testing purposes 

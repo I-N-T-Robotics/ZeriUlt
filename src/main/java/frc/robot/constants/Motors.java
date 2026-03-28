@@ -426,7 +426,7 @@ public interface Motors {
 
         public static TalonFXConfig turretConfigs = new TalonFXConfig()
             .withInvertedValue(InvertedValue.Clockwise_Positive)
-            .withNeutralMode(NeutralModeValue.Brake)
+            .withNeutralMode(NeutralModeValue.Coast)
             
             .withSupplyCurrentLimitAmps(60)
             .withStatorCurrentLimitEnabled(false)
