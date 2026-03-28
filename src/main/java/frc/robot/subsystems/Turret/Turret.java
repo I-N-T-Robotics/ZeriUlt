@@ -86,7 +86,6 @@
 //         double motorRotations = getAbsoluteTurretRotations() * Settings.Turret.Constants.GEAR_RATIO_MOTOR_TO_MECH;
 //         turretMotor.getConfigurator().setPosition(motorRotations);
 //     }
-  
 
 //     public boolean atTarget() {
 //         return Math.abs(getTurretRotations() - targetPositionRotations) < (Units.radiansToDegrees(Settings.Turret.Constants.toleranceRadians) / 360.0);
@@ -173,8 +172,7 @@ public class Turret extends SubsystemBase {
     private static final double GEAR_TO_TURRET_RATIO = 136.0 / 14.0; // ≈ 9.714
 
     // motor → turret (already defined in constants)
-    private static final double MOTOR_TO_TURRET =
-            Settings.Turret.Constants.GEAR_RATIO_MOTOR_TO_MECH;
+    private static final double MOTOR_TO_TURRET = Settings.Turret.Constants.GEAR_RATIO_MOTOR_TO_MECH;
 
     public Turret() {
         turretMotor = new TalonFX(TurretConstants.TURRET_MOTOR, Settings.upper);
@@ -188,6 +186,9 @@ public class Turret extends SubsystemBase {
         turretEncoder.getConfigurator().apply(TurretConstants.turretEncoderTurret.getConfiguration());
     }
 
+    // private double lastTurretFromAbs = 0;
+    // private int wraps = 0;
+
     // --- ABSOLUTE MULTI-TURN POSITION ---
     public double getAbsoluteTurretRotations() {
 
@@ -200,18 +201,27 @@ public class Turret extends SubsystemBase {
 
         // Motor-based continuous estimate
         double motorRotations = turretMotor.getPosition().getValueAsDouble();
-        double turretFromMotor = motorRotations / MOTOR_TO_TURRET;
 
         // Find closest rotation match
-        double error = MathUtil.inputModulus(
-                turretFromMotor - turretFromAbs,
-                -0.5,
-                0.5
-        );
+        double wraps = (motorRotations / GEAR_TO_TURRET_RATIO) % 10;
 
-        double k = Math.round(error);
+        return turretFromAbs + wraps;
 
-        return turretFromAbs + k;
+        // double abs = turretEncoder.getAbsolutePosition().getValueAsDouble();
+
+        // // Convert to fractional turret rotations
+        // double turretFromAbs = abs / GEAR_TO_TURRET_RATIO;
+
+        // // Detect crossing
+        // double delta = turretFromAbs - lastTurretFromAbs;
+        // if (delta < -0.5)
+        // wraps += 1; // crossed 0→1 forward
+        // else if (delta > 0.5)
+        // wraps -= 1; // crossed 1→0 backward
+
+        // lastTurretFromAbs = turretFromAbs;
+
+        // return turretFromAbs + wraps;
     }
 
     public Rotation2d getAbsoluteTurretRotation2d() {
@@ -222,6 +232,11 @@ public class Turret extends SubsystemBase {
     public void setCurrentPosition() {
         double motorRotations = getAbsoluteTurretRotations() * MOTOR_TO_TURRET;
         turretMotor.setPosition(motorRotations);
+
+        // lastTurretFromAbs = turretEncoder.getAbsolutePosition().getValueAsDouble() / GEAR_TO_TURRET_RATIO;
+        // wraps = 0;
+        // double motorRotations = lastTurretFromAbs * MOTOR_TO_TURRET;
+        // turretMotor.setPosition(motorRotations);
     }
 
     public void reset() {
@@ -230,16 +245,16 @@ public class Turret extends SubsystemBase {
 
     // --- CONTROL ---
     public boolean atTarget() {
-        return Math.abs(getTurretRotations() - targetPositionRotations)
-                < (Units.radiansToDegrees(Settings.Turret.Constants.toleranceRadians) / 360.0);
+        return Math.abs(getTurretRotations()
+                - targetPositionRotations) < (Units.radiansToDegrees(Settings.Turret.Constants.toleranceRadians)
+                        / 360.0);
     }
 
     public void setTarget(double rot) {
         targetPositionRotations = MathUtil.clamp(
                 rot,
                 Settings.Turret.Constants.TURRET_MIN_ROTATIONS,
-                Settings.Turret.Constants.TURRET_MAX_ROTATIONS
-        );
+                Settings.Turret.Constants.TURRET_MAX_ROTATIONS);
     }
 
     public double getTurretRotations() {
