@@ -62,18 +62,18 @@ public interface Settings {
     }
 
     public interface Shooter {
-        public final double SHOOTER_RPM_TOLERANCE = 50;
+        public final double SHOOTER_RPM_TOLERANCE = 500;
         public final double GEAR_RATIO = 1;
     }
 
     public interface Intake {
-        public final double DEPLOYED_POSITION = 8.26;
-        public final double UP_POSITION = 0.4;
+        public final double DEPLOYED_POSITION = 0.227;
+        public final double UP_POSITION = 0;
         public final double INTAKE_RPM = 5000;
         public final double OUTTAKE_RPM = -5000;
         public final double GEAR_RATIO = 1;
 
-        public final double INTAKE_POSITION_TOLERANCE = .5;
+        public final double INTAKE_POSITION_TOLERANCE = .05;
     }
 
     public interface Spindexer {

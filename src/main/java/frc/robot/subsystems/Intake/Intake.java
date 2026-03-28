@@ -33,28 +33,30 @@ public class Intake extends SubsystemBase {
     }
 
     public void deploy() {
-        intakePivot.setControl(
-            positionVoltage
-            .withPosition(Settings.Intake.DEPLOYED_POSITION));
+            intakePivot.setControl(
+                power.withOutput(0.15)
+            );
+            // positionVoltage
+            // .withPosition(Settings.Intake.DEPLOYED_POSITION));
     }
 
-    public void undeploy() {
-        intakePivot.setControl(
-            positionVoltage
-            .withPosition(Settings.Intake.UP_POSITION));
-    }
+    // public void undeploy() {
+    //     intakePivot.setControl(
+    //         positionVoltage
+    //         .withPosition(Settings.Intake.UP_POSITION));
+    // }
 
     public void toggleIntake() {
         isIntaking = !isIntaking;
 
         intakeMotor1.setControl(
-            power.withOutput(isIntaking ? 0.75 : 0)
+            power.withOutput(isIntaking ? 1 : 0)
         );
     }
 
     public void intake() {
         intakeMotor1.setControl(
-           power.withOutput(0.75)
+           power.withOutput(1)
         );
     }
 
