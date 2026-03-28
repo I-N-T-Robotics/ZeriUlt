@@ -41,7 +41,7 @@ public interface Settings {
             public final double toleranceRadians = Units.degreesToRadians(5);
             public final double TURRET_MIN_ROTATIONS = -0.375;
             public final double TURRET_MAX_ROTATIONS = 0.375;
-            public final double GEAR_RATIO_MOTOR_TO_MECH = 136;
+            public final double GEAR_RATIO_MOTOR_TO_MECH = 48.57;
         }
 
         public interface SoftwareLimit {

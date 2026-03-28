@@ -3,8 +3,6 @@ package frc.robot.subsystems.Intake;
 import frc.robot.constants.Motors.IntakeConstants;
 import frc.robot.constants.Settings;
 import com.ctre.phoenix6.controls.DutyCycleOut;
-import com.ctre.phoenix6.controls.PositionVoltage;
-import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
@@ -18,8 +16,6 @@ public class Intake extends SubsystemBase {
 
     private boolean isIntaking;
 
-    private final PositionVoltage positionVoltage = new PositionVoltage(0).withEnableFOC(true);
-    private final VelocityVoltage velocityVoltage = new VelocityVoltage(0).withEnableFOC(true);
     private final DutyCycleOut power = new DutyCycleOut(0).withEnableFOC(true);
 
     public Intake() {

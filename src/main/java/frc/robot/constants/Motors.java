@@ -430,7 +430,7 @@ public interface Motors {
             
             .withSupplyCurrentLimitAmps(60)
             .withStatorCurrentLimitEnabled(false)
-            .withRampRate(0.25)
+            .withRampRate(0)
             
             .withPIDConstants(Gains.Turret.kP, Gains.Turret.kI, Gains.Turret.kD, 0)
             .withFFConstants(Gains.Turret.kS, Gains.Turret.kV, Gains.Turret.kA, 0)

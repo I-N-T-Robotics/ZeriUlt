@@ -189,10 +189,8 @@ public class RobotContainer {
         //             new ShooterShootTest(shooter))));
 
         AmanController.L2()
-            .whileTrue(new ParallelCommandGroup(
-                new IntakeIntake(intake),
-                new DeployIntake(intake)
-            ));
+            .whileTrue(new DeployIntake(intake)
+                .andThen(new IntakeIntake(intake)));
 
         AmanController.povUp()
             .toggleOnTrue(new UndeployIntake(intake));

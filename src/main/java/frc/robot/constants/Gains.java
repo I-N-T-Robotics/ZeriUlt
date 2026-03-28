@@ -62,12 +62,12 @@ public class Gains {
         }
 
      public interface Turret {
-        double kP = 0;
+        double kP = 65;
         double kI = 0;
         double kD = 0;
 
-        double kS = 0;
-        double kV = 0;
+        double kS = 0.3;
+        double kV = 0.1;
         double kA = 0;
     }
 
