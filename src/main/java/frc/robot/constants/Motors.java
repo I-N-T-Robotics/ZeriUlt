@@ -425,7 +425,7 @@ public interface Motors {
         //TODO: make sure they are correct
 
         public static TalonFXConfig turretConfigs = new TalonFXConfig()
-            .withInvertedValue(InvertedValue.Clockwise_Positive)
+            .withInvertedValue(InvertedValue.CounterClockwise_Positive)
             .withNeutralMode(NeutralModeValue.Coast)
             
             .withSupplyCurrentLimitAmps(60)
@@ -435,8 +435,6 @@ public interface Motors {
             .withPIDConstants(Gains.Turret.kP, Gains.Turret.kI, Gains.Turret.kD, 0)
             .withFFConstants(Gains.Turret.kS, Gains.Turret.kV, Gains.Turret.kA, 0)
             .withStaticFeedforwardSign(StaticFeedforwardSignValue.UseClosedLoopSign, 0)
-            
-            .withSensorToMechanismRatio(Settings.Turret.Constants.GEAR_RATIO_MOTOR_TO_MECH)
 
             .withSoftLimits(
                 false, false,

@@ -185,26 +185,36 @@ public class Turret extends SubsystemBase {
         turretEncoder.getConfigurator().apply(TurretConstants.turretEncoderTurret.getConfiguration());
     }
 
-    // private double lastTurretFromAbs = 0;
-    // private int wraps = 0;
+    private double lastAbsGearRotations = 0;
+    private int gearWrapCount = 0;
+    private double currentTurretRotations = 0;
+    private boolean wrapTrackingInitialized = false;
+
+    private void updatePosition() {
+        double absGearRotations = turretEncoder.getAbsolutePosition().getValueAsDouble();
+
+        if (!wrapTrackingInitialized) {
+            lastAbsGearRotations = absGearRotations;
+            gearWrapCount = 0;
+            currentTurretRotations = absGearRotations / GEAR_TO_TURRET_RATIO;
+            wrapTrackingInitialized = true;
+            return;
+        }
+
+        double delta = absGearRotations - lastAbsGearRotations;
+        if (delta < -0.5) {
+            gearWrapCount++;
+        } else if (delta > 0.5) {
+            gearWrapCount--;
+        }
+
+        lastAbsGearRotations = absGearRotations;
+        currentTurretRotations = (gearWrapCount + absGearRotations) / GEAR_TO_TURRET_RATIO;
+    }
 
     // --- ABSOLUTE MULTI-TURN POSITION ---
     public double getAbsoluteTurretRotations() {
-
-        // Absolute encoder (0–1)
-        double abs = turretEncoder.getAbsolutePosition().getValueAsDouble();
-
-        // Convert to turret rotation (within 1 turn)
-        double turretFromAbs = abs / GEAR_TO_TURRET_RATIO;
-
-        // Motor-based continuous estimate
-        double motorRotations = turretMotor.getPosition().getValueAsDouble();
-
-        // Find closest rotation match
-        double wraps = (motorRotations / GEAR_TO_TURRET_RATIO) * 10;
-        SmartDashboard.putNumber("Turret/wraps", wraps);
-
-        return (turretFromAbs + (wraps * GEAR_TO_TURRET_RATIO)) / 11;
+        return currentTurretRotations;
     }
 
     public Rotation2d getAbsoluteTurretRotation2d() {
@@ -213,9 +223,13 @@ public class Turret extends SubsystemBase {
 
     // --- SEED MOTOR ENCODER FROM ABSOLUTE ---
     public void setCurrentPosition() {
-        double lastTurretFromAbs = turretEncoder.getAbsolutePosition().getValueAsDouble() / GEAR_TO_TURRET_RATIO;
-        double motorRotations = lastTurretFromAbs * MOTOR_TO_TURRET;
-        turretMotor.setPosition(motorRotations);
+        double absGearRotations = turretEncoder.getAbsolutePosition().getValueAsDouble();
+        lastAbsGearRotations = absGearRotations;
+        gearWrapCount = 0;
+        wrapTrackingInitialized = false;
+
+        double turretRotations = absGearRotations/GEAR_TO_TURRET_RATIO;
+        turretMotor.setPosition(turretRotations * MOTOR_TO_TURRET);
     }
 
     public void reset() {
@@ -247,22 +261,25 @@ public class Turret extends SubsystemBase {
 
     @Override
     public void periodic() {
+        updatePosition();
+
+        // Seed once when stationary
+        if (!isSeeded && Math.abs(turretMotor.getRotorVelocity().getValueAsDouble()) < 1) {
+            turretMotor.setPosition(currentTurretRotations * MOTOR_TO_TURRET);
+            isSeeded = true;
+        }
 
         // Dashboard
         SmartDashboard.putBoolean("Turret/atTarget", atTarget());
         SmartDashboard.putNumber("Turret/absPosition", getAbsoluteTurretRotations());
         SmartDashboard.putNumber("Turret/absRaw", turretEncoder.getAbsolutePosition().getValueAsDouble());
         SmartDashboard.putNumber("Turret/motorPosition", getMotorRotations());
+        SmartDashboard.putNumber("Turret/currentTurretRotations", currentTurretRotations);
+        SmartDashboard.putNumber("Turret/motorSeedValue", currentTurretRotations * MOTOR_TO_TURRET);
         SmartDashboard.putNumber("Turret/turretPosition", getTurretRotations());
         SmartDashboard.putNumber("Turret/targetTurretPosition", targetPositionRotations);
         SmartDashboard.putNumber("Turret/turretEncoder", turretEncoder.getAbsolutePosition().getValueAsDouble());
         SmartDashboard.putBoolean("Turret/isSeeded", isSeeded);
-
-        // Seed once when stationary
-        if (!isSeeded && Math.abs(turretMotor.getRotorVelocity().getValueAsDouble()) < 1) {
-            reset();
-            isSeeded = true;
-        }
 
         // Closed-loop control
         if (isSeeded) {

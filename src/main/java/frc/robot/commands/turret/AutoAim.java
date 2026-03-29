@@ -53,7 +53,8 @@ public class AutoAim extends Command{
     double compensatedTarget = robotRelativeRotations + SHOOTER_OFFSET_ROTATIONS;
 
     // track with post crt seeding internal encoder
-    double currentRotations = turret.getTurretRotations();
+    // double currentRotations = turret.getTurretRotations();
+    double currentRotations = turret.getAbsoluteTurretRotations();
 
     double finalTarget = findBestReachableTarget(compensatedTarget, currentRotations);
 
