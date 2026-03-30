@@ -1,5 +1,7 @@
 package frc.robot.constants;
 
+import static edu.wpi.first.units.Units.DegreesPerSecond;
+
 import com.ctre.phoenix6.CANBus;
 import com.pathplanner.lib.path.PathConstraints;
 
@@ -9,6 +11,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.measure.AngularVelocity;
 
 public interface Settings {
     public final CANBus CANIVORE = new CANBus("canivore", ".logs/example.hoot");
@@ -60,6 +63,10 @@ public interface Settings {
     public interface Vision {
         public final Vector<N3> MT1_STDDEVS = VecBuilder.fill(0.5, 0.5, 1.0);
         public final Vector<N3> MT2_STDDEVS = VecBuilder.fill(0.7, 0.7, 96429642.0);
+
+        public static AngularVelocity MAX_ANGULAR_VELOCITY = DegreesPerSecond.of(360);
+
+        public static double AREA_THRESHOLD = 0.2;
     }
 
     public interface Shooter {

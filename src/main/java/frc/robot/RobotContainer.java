@@ -16,6 +16,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -72,7 +73,7 @@ public class RobotContainer {
     private final Hood hood = new Hood();
     private final Intake intake = new Intake();
     private final Spindexer spindexer = new Spindexer();
-    private final LimelightVision limelightVision = new LimelightVision(drivetrain);
+    private final LimelightVision limelightVision = new LimelightVision();
 
     // Autons
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
@@ -83,8 +84,6 @@ public class RobotContainer {
         configureDefaultCommands();
         configureButtonBindings();
         configureAutons();
-
-        limelightVision.setDrivetrain(drivetrain);
 
         NamedCommands.registerCommand("StartIntake", new IntakeIntake(intake));
         NamedCommands.registerCommand("DeployIntake", new DeployIntake(intake));
@@ -271,4 +270,10 @@ public class RobotContainer {
         isFerrying = !robotIsOnAllianceSide();
         return isFerrying;
     }
+
+    public Command AddVisionMeasurement() {
+        return new frc.robot.commands.vision.AddVisionMeasurement(drivetrain, limelightVision)
+            .withInterruptBehavior(InterruptionBehavior.kCancelIncoming)
+            .ignoringDisable(true);
+  }
 }

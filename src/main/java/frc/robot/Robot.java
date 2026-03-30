@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.vision.SetMegaTagMode;
 import frc.robot.subsystems.Vision.LimelightVision;
 
 public class Robot extends TimedRobot {
@@ -84,6 +83,8 @@ public class Robot extends TimedRobot {
     private RobotContainer robot;
     private Command auto;
 
+    private LimelightVision limelightVision;
+
     /*************************/
     /*** ROBOT SCHEDULEING ***/
     /*************************/
@@ -91,6 +92,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         robot = new RobotContainer();
+        limelightVision = new LimelightVision();
     }
 
     @Override
@@ -105,7 +107,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledInit() {
-        CommandScheduler.getInstance().schedule(new SetMegaTagMode(LimelightVision.MegaTagMode.MT1));
+        limelightVision.setMegaTag2(false);
     }
 
     @Override
@@ -119,7 +121,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         auto = robot.getAutonomousCommand();
-        CommandScheduler.getInstance().schedule(new SetMegaTagMode(LimelightVision.MegaTagMode.MT2));
+        limelightVision.setMegaTag2(true);
 
         if (auto != null) {
             auto.schedule();
@@ -140,7 +142,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        CommandScheduler.getInstance().schedule(new SetMegaTagMode(LimelightVision.MegaTagMode.MT2));
+        limelightVision.setMegaTag2(true);
 
         if (auto != null) {
             auto.cancel();
