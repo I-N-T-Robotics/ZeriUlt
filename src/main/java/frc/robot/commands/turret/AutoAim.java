@@ -47,7 +47,7 @@ public class AutoAim extends Command{
     double fieldRotations = fieldAngleToTarget.getRotations();
     double robotRotations = robotPose.getRotation().getRotations();
     double robotRelativeRotations =
-        MathUtil.inputModulus(fieldRotations - robotRotations, Settings.Turret.Constants.TURRET_MIN_ROTATIONS, Settings.Turret.Constants.TURRET_MAX_ROTATIONS);
+        MathUtil.inputModulus(fieldRotations + robotRotations, Settings.Turret.Constants.TURRET_MIN_ROTATIONS, Settings.Turret.Constants.TURRET_MAX_ROTATIONS);
 
     // so the flywheel can point at the target and not the left plate
     double compensatedTarget = robotRelativeRotations + SHOOTER_OFFSET_ROTATIONS;

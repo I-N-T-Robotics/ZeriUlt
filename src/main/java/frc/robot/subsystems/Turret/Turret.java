@@ -233,8 +233,7 @@ public class Turret extends SubsystemBase {
     }
 
     public void reset() {
-        turretMotor.setPosition(0);
-        turretEncoder.setPosition(0);
+        setCurrentPosition();
     }
 
     // --- CONTROL ---

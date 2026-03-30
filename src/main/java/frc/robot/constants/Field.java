@@ -243,11 +243,11 @@ public interface Field {
     Translation2d RED_GOAL_CENTER = transformToOppositeAlliance(BLUE_GOAL_CENTER);
     Translation2d hubCenter = Robot.isBlue() ?  BLUE_GOAL_CENTER :  RED_GOAL_CENTER;
 
-    Translation2d BLUE_TOP_FERRY = new Translation2d(182.11/2 /* 1/2 ds to alliance line*/, 158.84/2 /*1/2 middle to top*/);
+    Translation2d BLUE_TOP_FERRY = new Translation2d(Units.inchesToMeters(182.11/2) /* 1/2 ds to alliance line*/, Units.inchesToMeters(158.84/2) /*1/2 middle to top*/);
     Translation2d RED_TOP_FERRY = transformToOppositeAlliance(BLUE_TOP_FERRY);
     Translation2d topFerry = Robot.isBlue() ? BLUE_TOP_FERRY : RED_TOP_FERRY;
 
-    Translation2d BLUE_BOTTOM_FERRY = new Translation2d(182.11/2, BLUE_TOP_FERRY.getY() + 158.84);
+    Translation2d BLUE_BOTTOM_FERRY = new Translation2d(182.11/2, BLUE_TOP_FERRY.getY() + Units.inchesToMeters(158.84));
     Translation2d RED_BOTTOM_FERRY = transformToOppositeAlliance(BLUE_BOTTOM_FERRY);
     Translation2d bottomFerry = Robot.isBlue() ? BLUE_BOTTOM_FERRY : RED_BOTTOM_FERRY;
 }
