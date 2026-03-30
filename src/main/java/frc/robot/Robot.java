@@ -98,6 +98,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         SmartDashboard.putData(CommandScheduler.getInstance());
+        robot.AddVisionMeasurement();
         CommandScheduler.getInstance().run();
     }
 
