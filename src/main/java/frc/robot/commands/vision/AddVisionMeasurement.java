@@ -4,6 +4,7 @@ import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.Cameras;
 import frc.robot.subsystems.Vision.LimelightVision;
@@ -50,6 +51,12 @@ public class AddVisionMeasurement extends Command {
       drivetrain.addVisionMeasurement(
           estimatedPose.get().pose, estimatedPose.get().timestampSeconds, stdDev);
     }
+
+    SmartDashboard.putBoolean("Vision/hasEstimate", estimatedPose.isPresent());
+    SmartDashboard.putNumber("Vision/estimateX", estimatedPose.isPresent() ? estimatedPose.get().pose.getX() : -1);
+    SmartDashboard.putNumber("Vision/estimateY", estimatedPose.isPresent() ? estimatedPose.get().pose.getY() : -1);
+    SmartDashboard.putNumber("Vision/loopCount", 
+    SmartDashboard.getNumber("Vision/loopCount", 0) + 1);
   }
 
   @Override

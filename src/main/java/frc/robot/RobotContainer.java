@@ -275,5 +275,9 @@ public class RobotContainer {
         return new frc.robot.commands.vision.AddVisionMeasurement(drivetrain, limelightVision)
             .withInterruptBehavior(InterruptionBehavior.kCancelIncoming)
             .ignoringDisable(true);
-  }
+    }
+
+  public LimelightVision getLimelightVision() {
+        return limelightVision;
+    }
 }

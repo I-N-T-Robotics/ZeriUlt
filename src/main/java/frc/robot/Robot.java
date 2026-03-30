@@ -83,8 +83,6 @@ public class Robot extends TimedRobot {
     private RobotContainer robot;
     private Command auto;
 
-    private LimelightVision limelightVision;
-
     /*************************/
     /*** ROBOT SCHEDULEING ***/
     /*************************/
@@ -92,13 +90,13 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         robot = new RobotContainer();
-        limelightVision = new LimelightVision();
+
+        robot.AddVisionMeasurement().schedule();;
     }
 
     @Override
     public void robotPeriodic() {
         SmartDashboard.putData(CommandScheduler.getInstance());
-        robot.AddVisionMeasurement();
         CommandScheduler.getInstance().run();
     }
 
@@ -108,7 +106,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledInit() {
-        limelightVision.setMegaTag2(false);
+        robot.getLimelightVision().setMegaTag2(false);
     }
 
     @Override
@@ -122,7 +120,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         auto = robot.getAutonomousCommand();
-        limelightVision.setMegaTag2(true);
+        robot.getLimelightVision().setMegaTag2(true);
 
         if (auto != null) {
             auto.schedule();
@@ -143,7 +141,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        limelightVision.setMegaTag2(true);
+        robot.getLimelightVision().setMegaTag2(true);
 
         if (auto != null) {
             auto.cancel();
