@@ -46,8 +46,10 @@ public class AutoAim extends Command{
 
     double fieldRotations = fieldAngleToTarget.getRotations();
     double robotRotations = robotPose.getRotation().getRotations();
-    double robotRelativeRotations =
-        MathUtil.inputModulus(fieldRotations + robotRotations, Settings.Turret.Constants.TURRET_MIN_ROTATIONS, Settings.Turret.Constants.TURRET_MAX_ROTATIONS);
+    double robotRelativeRotations = MathUtil.inputModulus(
+      fieldRotations + robotRotations,
+      Settings.Turret.Constants.TURRET_MIN_ROTATIONS,
+      Settings.Turret.Constants.TURRET_MAX_ROTATIONS);
 
     // so the flywheel can point at the target and not the left plate
     double compensatedTarget = robotRelativeRotations + SHOOTER_OFFSET_ROTATIONS;
@@ -74,20 +76,36 @@ public class AutoAim extends Command{
     }
 
   private double findBestReachableTarget(double desiredTarget, double current) {
-    double[] candidates = {desiredTarget, desiredTarget + 1.0, desiredTarget - 1.0};
+    double rangeSize = Settings.Turret.Constants.TURRET_MAX_ROTATIONS 
+                     - Settings.Turret.Constants.TURRET_MIN_ROTATIONS;
 
-    double bestTarget = current;
+    double[] candidates = {
+        desiredTarget,
+        desiredTarget + rangeSize,
+        desiredTarget - rangeSize
+    };
+
+    double bestTarget = Double.NaN;
     double shortestDistance = Double.MAX_VALUE;
 
     for (double candidate : candidates) {
-      if (candidate >= Settings.Turret.Constants.TURRET_MIN_ROTATIONS && candidate <= Settings.Turret.Constants.TURRET_MAX_ROTATIONS) {
-        double distance = Math.abs(candidate - current);
-
-        if (distance < shortestDistance) {
-          shortestDistance = distance;
-          bestTarget = candidate;
+        if (candidate >= Settings.Turret.Constants.TURRET_MIN_ROTATIONS
+                && candidate <= Settings.Turret.Constants.TURRET_MAX_ROTATIONS) {
+            double distance = Math.abs(candidate - current);
+            if (distance < shortestDistance) {
+                shortestDistance = distance;
+                bestTarget = candidate;
+            }
         }
-      }
+    }
+
+    // Target is in the deadzone — drive to nearest hardstop
+    if (Double.isNaN(bestTarget)) {
+        double distToMin = Math.abs(current - Settings.Turret.Constants.TURRET_MIN_ROTATIONS);
+        double distToMax = Math.abs(current - Settings.Turret.Constants.TURRET_MAX_ROTATIONS);
+        bestTarget = distToMin < distToMax
+            ? Settings.Turret.Constants.TURRET_MIN_ROTATIONS
+            : Settings.Turret.Constants.TURRET_MAX_ROTATIONS;
     }
 
     return bestTarget;
