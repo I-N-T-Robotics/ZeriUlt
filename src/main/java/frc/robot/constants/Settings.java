@@ -46,6 +46,9 @@ public interface Settings {
             public final double TURRET_MIN_ROTATIONS = 0.0;
             public final double TURRET_MAX_ROTATIONS = 0.95;
             public final double GEAR_RATIO_MOTOR_TO_MECH = 48.57;
+
+            public final double STALL_CURRENT_THRESHOLD = 20;
+            public final double ZEROING_VOLTAGE = -2.0;
         }
 
         public interface SoftwareLimit {
