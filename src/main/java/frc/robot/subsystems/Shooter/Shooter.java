@@ -58,11 +58,11 @@ public class Shooter extends SubsystemBase {
     }
 
     public double getRightMotorRPM() {
-        return rightMotor.getVelocity().getValueAsDouble() * 60;
+        return rightMotor.getVelocity().getValueAsDouble() / 60;
     }
 
     public double getLeftMotorRPM() {
-        return leftMotor.getVelocity().getValueAsDouble() * 60;
+        return leftMotor.getVelocity().getValueAsDouble() / 60;
     }
 
     public void stopShooter() {

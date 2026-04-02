@@ -44,7 +44,7 @@ public interface Settings {
             public final double toleranceRadians = Units.degreesToRadians(10);
             public final double toleranceRotations = Units.degreesToRotations(10);
             public final double TURRET_MIN_ROTATIONS = 0.0;
-            public final double TURRET_MAX_ROTATIONS = 0.95;
+            public final double TURRET_MAX_ROTATIONS = 0.7;
             public final double GEAR_RATIO_MOTOR_TO_MECH = 48.57;
 
             public final double STALL_CURRENT_THRESHOLD = 20;
@@ -52,14 +52,14 @@ public interface Settings {
         }
 
         public interface SoftwareLimit {
-            public final double FORWARD_MAX_ROTATIONS = 0.95;
+            public final double FORWARD_MAX_ROTATIONS = 0.7;
             public final double BACKWARDS_MAX_ROTATIONS = 0;
         }
 
         public interface Encoder {
             //in rotations
             public final double ENCODER_ENCODER_OFFSET = 0.0;
-            public final double ENCODER_TURRET_OFFSET = 0.0;
+            public final double ENCODER_TURRET_OFFSET = 0;//-0.656;
         }
     }
 
@@ -88,9 +88,9 @@ public interface Settings {
     }
 
     public interface Spindexer {
-        public final double SPINDEXER_RPM = 5000;
-        public final double TRANSITION_TO_SPEED_RATIO = 1;
-        public final double TRANSITION_MIN_SPEED = 4800;
+        public final double SPINDEXER_RPM = 3600;
+        public final double TRANSITION_TO_SPEED_RATIO = 2.5;
+        public final double TRANSITION_MIN_SPEED = 3500;
         public final double STALL_CURRENT_LIMIT = 40; //TODO: random number
         public final double GEAR_RATIO = 5; //motor to mech
     }//16 - 60 - 18 - 24T
@@ -104,8 +104,8 @@ public interface Settings {
         //TODO: sensor to mech; not motor to mech
 
         //in rotations
-        public final double FORWARD_SOFT_LIMIT = 0.5;
-        public final double REVERSE_SOFT_LIMIT = 0.0;
+        public final double FORWARD_SOFT_LIMIT = 0.95;
+        public final double REVERSE_SOFT_LIMIT = 0.05;
         public final double ENCODER_OFFSET = 0;
     }
 

@@ -62,7 +62,7 @@ public class Gains {
         }
 
      public interface Turret {
-        double kP = 5;
+        double kP = 30;
         double kI = 0;
         double kD = 0;
 
@@ -72,12 +72,12 @@ public class Gains {
     }
 
     public interface Shooter {
-        double kP = 1;
+        double kP = 0.18;
         double kI = 0;
         double kD = 0;
 
         double kS = 0;
-        double kV = 0;
+        double kV = 0.125;
         double kA = 0;
     }
 
@@ -87,7 +87,7 @@ public class Gains {
         double kD = 0;
 
         double kS = 0;
-        double kV = 0;
+        double kV = 0.7;
         double kA = 0;
     }
 
@@ -97,16 +97,16 @@ public class Gains {
         double kD = 0;
 
         double kS = 0;
-        double kV = 0;
+        double kV = 0.3;
         double kA = 0;
     }
 
     public interface Hood {
-        double kP = 0;
+        double kP = 13.5;
         double kI = 0;
-        double kD = 0;
+        double kD = 0.3;
 
-        double kS = 0;
+        double kS = 0.2;
         double kV = 0;
         double kA = 0;
     }
