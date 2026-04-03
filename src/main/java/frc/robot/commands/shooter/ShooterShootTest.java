@@ -14,7 +14,7 @@ public class ShooterShootTest extends Command {
 
     @Override
     public void execute() {
-        shooter.setRightMotorRPM(2000);
+        shooter.setSpeedRPS(20);
     }
 
     @Override
@@ -24,6 +24,6 @@ public class ShooterShootTest extends Command {
 
     @Override
     public void end (boolean interupted) {
-        shooter.setRightMotorRPM(0);
+        shooter.setSpeedRPS(0);
     }
 }

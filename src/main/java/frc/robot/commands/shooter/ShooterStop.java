@@ -19,7 +19,7 @@ public class ShooterStop extends Command {
 
     @Override
     public boolean isFinished() {
-        return shooter.getRightMotorRPM() < 5;
+        return shooter.getRightMotorRPS() < 5;
     }
 
     @Override

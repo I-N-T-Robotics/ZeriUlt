@@ -13,19 +13,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Spindexer extends SubsystemBase {
 
-    // private static final Spindexer instance; 
-
-    // static {
-    //     instance = new Spindexer();
-    // }
-
-    // public static Spindexer getInstance() {
-    //     return instance;
-    // }
-
     private TalonFX intakeSpindexMotor;
     private TalonFX farSpindexMotor;
-
     private TalonFX transitionMotor;
 
     private final VelocityVoltage velocityVoltage = new VelocityVoltage(0).withEnableFOC(true);
@@ -40,7 +29,8 @@ public class Spindexer extends SubsystemBase {
         transitionMotor = new TalonFX(Motors.SpindexerConstants.TRANSITION_MOTOR, Settings.upper);
         transitionMotor.setNeutralMode(NeutralModeValue.Coast);
 
-        intakeSpindexMotor.setControl(new Follower(Motors.SpindexerConstants.FAR_SPINDEXER_MOTOR,  MotorAlignmentValue.Aligned));
+        intakeSpindexMotor.setControl(new Follower(
+            Motors.SpindexerConstants.FAR_SPINDEXER_MOTOR, MotorAlignmentValue.Aligned));
 
         intakeSpindexMotor.getConfigurator().apply(Motors.SpindexerConstants.intakeSpindexerMotorConfig.getConfiguration());
         farSpindexMotor.getConfigurator().apply(Motors.SpindexerConstants.farSpindexerMotorConfig.getConfiguration());
@@ -49,61 +39,56 @@ public class Spindexer extends SubsystemBase {
 
     public boolean getIsStalling() {
         return (transitionMotor.getSupplyCurrent().getValueAsDouble() > Settings.Spindexer.STALL_CURRENT_LIMIT) ||
-                (farSpindexMotor.getSupplyCurrent().getValueAsDouble() > Settings.Spindexer.STALL_CURRENT_LIMIT);
+               (farSpindexMotor.getSupplyCurrent().getValueAsDouble() > Settings.Spindexer.STALL_CURRENT_LIMIT);
     }
 
     public void startTransition() {
-        transitionMotor.setControl(
-            velocityVoltage
-            .withVelocity(Settings.Spindexer.SPINDEXER_RPM * Settings.Spindexer.TRANSITION_TO_SPEED_RATIO));
+        transitionMotor.setControl(velocityVoltage
+            .withVelocity(Settings.Spindexer.SPINDEXER_RPS * Settings.Spindexer.TRANSITION_TO_SPEED_RATIO));
     }
 
     public void stopTransition() {
-        transitionMotor.setControl(
-            velocityVoltage
-            .withVelocity(0));
+        transitionMotor.setControl(velocityVoltage.withVelocity(0));
     }
 
     public void reverseTransition() {
-        transitionMotor.setControl(
-            velocityVoltage
-            .withVelocity(-1 * Settings.Spindexer.SPINDEXER_RPM * Settings.Spindexer.TRANSITION_TO_SPEED_RATIO));
+        transitionMotor.setControl(velocityVoltage
+            .withVelocity(-Settings.Spindexer.SPINDEXER_RPS * Settings.Spindexer.TRANSITION_TO_SPEED_RATIO));
     }
 
-    public double getTransitionRPM() {
+    // TalonFX returns RPS natively
+    public double getTransitionRPS() {
         return transitionMotor.getVelocity().getValueAsDouble();
     }
 
+    // TRANSITION_MIN_SPEED and tolerance should both be in RPS in Settings
     public boolean transitionAtSpeed() {
-        return Math.abs(getTransitionRPM() - Settings.Spindexer.TRANSITION_MIN_SPEED) < 100;
+        return Math.abs(getTransitionRPS() - Settings.Spindexer.TRANSITION_MIN_RPS)
+                < Settings.Spindexer.TRANSITION_RPS_TOLERANCE;
     }
 
     public void startSpindexer() {
-        farSpindexMotor.setControl(
-            velocityVoltage
-            .withVelocity(Settings.Spindexer.SPINDEXER_RPM));
+        farSpindexMotor.setControl(velocityVoltage
+            .withVelocity(Settings.Spindexer.SPINDEXER_RPS));
     }
 
     public void stopSpindexer() {
-        farSpindexMotor.setControl(
-            velocityVoltage
-            .withVelocity(0));
+        farSpindexMotor.setControl(velocityVoltage.withVelocity(0));
     }
 
     public void reverseSpindexer() {
-        farSpindexMotor.setControl(
-            velocityVoltage
-            .withVelocity(-Settings.Spindexer.SPINDEXER_RPM));
+        farSpindexMotor.setControl(velocityVoltage
+            .withVelocity(-Settings.Spindexer.SPINDEXER_RPS));
     }
 
-    public double getSpindexerRPM() {
+    public double getSpindexerRPS() {
         return farSpindexMotor.getVelocity().getValueAsDouble();
     }
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Spindexer/SpindexerRPM", getSpindexerRPM());
-        SmartDashboard.putNumber("Spindexer/TransitionRPM", getTransitionRPM());
-        SmartDashboard.putBoolean("Spindexer/SpindexerIsStalling", getIsStalling());
+        SmartDashboard.putNumber("Spindexer/SpindexerRPS", getSpindexerRPS());
+        SmartDashboard.putNumber("Spindexer/TransitionRPS", getTransitionRPS());
+        SmartDashboard.putBoolean("Spindexer/IsStalling", getIsStalling());
     }
 }

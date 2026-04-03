@@ -8,6 +8,7 @@ import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -16,8 +17,9 @@ public class Hood extends SubsystemBase {
     private TalonFX hoodMotor;
     private CANcoder hoodEncoder;
 
-    private double targetAngle;
-    private double targetVel;
+    // rotations
+    private double targetRotations;
+    private double targetVelRPS;
 
     private final PositionVoltage positionVoltage = new PositionVoltage(0).withEnableFOC(true);
     private final VelocityVoltage velocityVoltage = new VelocityVoltage(0).withEnableFOC(true);
@@ -32,39 +34,40 @@ public class Hood extends SubsystemBase {
         hoodEncoder.getConfigurator().apply(Motors.HoodConstants.hoodEncoderConfigs.getConfiguration());
     }
 
-    public void setHoodAngle(double Angle) {
-        targetAngle = Angle;
-
-        hoodMotor.setControl(
-            positionVoltage
-            .withPosition(Angle));
+    // Degrees to rotations
+    public void setHoodAngle(double angleDegrees) {
+        targetRotations = Units.degreesToRotations(angleDegrees);
+        hoodMotor.setControl(positionVoltage.withPosition(targetRotations));
     }
 
     public void stowHood() {
-        hoodMotor.setControl(
-            velocityVoltage
-            .withVelocity(Settings.Hood.HOOD_RESET_RPS)
-        );
-        targetVel = Settings.Hood.HOOD_RESET_RPS;
+        targetVelRPS = Settings.Hood.HOOD_RESET_RPS;
+        hoodMotor.setControl(velocityVoltage.withVelocity(targetVelRPS));
     }
 
     public void resetHood() {
         hoodEncoder.setPosition(0);
-        targetVel = 0;
+        targetVelRPS = 0;
     }
 
     public boolean hoodAtPosition() {
-        return (hoodEncoder.getPosition().getValueAsDouble() - targetAngle) < Settings.Hood.HOOD_TOLERANCE;
+        return Math.abs(hoodEncoder.getPosition().getValueAsDouble() - targetRotations)
+                < Settings.Hood.HOOD_TOLERANCE;
     }
 
     public boolean hoodIsStalling() {
-        return ((hoodMotor.getStatorCurrent().getValueAsDouble() >  Settings.Hood.HOOD_STALL_CURRENT) &&
-                (targetVel == Settings.Hood.HOOD_RESET_RPS));
+        return (hoodMotor.getStatorCurrent().getValueAsDouble() > Settings.Hood.HOOD_STALL_CURRENT)
+                && (targetVelRPS == Settings.Hood.HOOD_RESET_RPS);
+    }
+
+    public double getHoodAngleDegrees() {
+        return Units.rotationsToDegrees(hoodEncoder.getPosition().getValueAsDouble());
     }
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Hood/TargetAngle", targetAngle);
+        SmartDashboard.putNumber("Hood/TargetAngleDegrees", Units.rotationsToDegrees(targetRotations));
+        SmartDashboard.putNumber("Hood/CurrentAngleDegrees", getHoodAngleDegrees());
         SmartDashboard.putBoolean("Hood/isStalling", hoodIsStalling());
         SmartDashboard.putBoolean("Hood/atPosition", hoodAtPosition());
     }

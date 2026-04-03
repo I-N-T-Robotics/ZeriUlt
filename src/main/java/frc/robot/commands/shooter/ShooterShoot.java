@@ -29,7 +29,7 @@ public class ShooterShoot extends Command {
 
         double distance = Distance.calculateDistance(robotPose.getX(), robotPose.getY(), targetPose.getX(), targetPose.getY());
 
-        shooter.setRightMotorRPM(ShootInterpolation.getRPM(distance));
+        shooter.setSpeedRPS(ShootInterpolation.getRPM(distance));
     }
 
     @Override

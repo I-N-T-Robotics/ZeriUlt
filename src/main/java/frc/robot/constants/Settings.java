@@ -73,7 +73,7 @@ public interface Settings {
     }
 
     public interface Shooter {
-        public final double SHOOTER_RPM_TOLERANCE = 500;
+        public final double SHOOTER_RPS_TOLERANCE = 5;
         public final double GEAR_RATIO = 1;
     }
 
@@ -88,15 +88,16 @@ public interface Settings {
     }
 
     public interface Spindexer {
-        public final double SPINDEXER_RPM = 3600;
+        public final double SPINDEXER_RPS = 20;
         public final double TRANSITION_TO_SPEED_RATIO = 2.5;
-        public final double TRANSITION_MIN_SPEED = 3500;
+        public final double TRANSITION_MIN_RPS = 40;
+        public final double TRANSITION_RPS_TOLERANCE = 5;
         public final double STALL_CURRENT_LIMIT = 40; //TODO: random number
         public final double GEAR_RATIO = 5; //motor to mech
     }//16 - 60 - 18 - 24T
 
     public interface Hood {
-        public final double HOOD_TOLERANCE = 5;
+        public final double HOOD_TOLERANCE = 0.05;
         public final double HOOD_RESET_RPS = -0.2;
         public final double HOOD_STALL_CURRENT = 20;
         public final double GEAR_RATIO = 96; //96:1 
