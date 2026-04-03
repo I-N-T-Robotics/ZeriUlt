@@ -134,118 +134,114 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class AutoAim extends Command {
-    private final Turret turret;
-    private final CommandSwerveDrivetrain drive;
-    private final Supplier<Translation2d> targetPoseSupplier;
-    private boolean isFerrying = false;
+  private final Turret turret;
+  private final CommandSwerveDrivetrain drive;
+  private final Supplier<Translation2d> targetPoseSupplier;
+  private boolean isFerrying = false;
 
-    private static final double SHOOTER_OFFSET_ROTATIONS = 0; // TODO: FIND
+  private static final double SHOOTER_OFFSET_ROTATIONS = 0; // TODO: FIND
 
-    // Tracks which hardstop we last committed to when in the deadzone
-    private boolean lastCommittedToMax = false;
+  // Tracks which hardstop we last committed to when in the deadzone
+  private boolean lastCommittedToMax = false;
 
-    public AutoAim(Turret turret, CommandSwerveDrivetrain drive, Supplier<Translation2d> targetPoseSupplier) {
-        this.turret = turret;
-        this.drive = drive;
-        this.targetPoseSupplier = targetPoseSupplier;
-        addRequirements(turret);
+  public AutoAim(Turret turret, CommandSwerveDrivetrain drive, Supplier<Translation2d> targetPoseSupplier) {
+    this.turret = turret;
+    this.drive = drive;
+    this.targetPoseSupplier = targetPoseSupplier;
+    addRequirements(turret);
+  }
+
+  @Override
+  public void execute() {
+    Pose2d robotPose = drive.getPose();
+    Translation2d targetPose = targetPoseSupplier.get();
+
+    double dx = targetPose.getX() - robotPose.getX();
+    double dy = targetPose.getY() - robotPose.getY();
+
+    if (getIsFerrying()) {
+      double vx = drive.getChassisSpeeds().vxMetersPerSecond;
+      double shootWhileMovingFactor = 0.2;
+      dx += vx * shootWhileMovingFactor;
     }
 
-    @Override
-    public void execute() {
-        Pose2d robotPose = drive.getPose();
-        Translation2d targetPose = targetPoseSupplier.get();
+    Rotation2d fieldAngleToTarget = new Rotation2d(dx, dy);
 
-        double dx = targetPose.getX() - robotPose.getX();
-        double dy = targetPose.getY() - robotPose.getY();
+    double fieldRotations = fieldAngleToTarget.getRotations();
+    double robotRotations = robotPose.getRotation().getRotations();
 
-        if (getIsFerrying()) {
-            double vx = drive.getChassisSpeeds().vxMetersPerSecond;
-            double shootWhileMovingFactor = 0.2;
-            dx += vx * shootWhileMovingFactor;
+    // Wrap in full 0-1 space so inputModulus works correctly for a full circle.
+    // findBestReachableTarget handles mapping into the actual turret range.
+    double robotRelativeRotations = MathUtil.inputModulus(
+        fieldRotations + robotRotations, 0.0, 1.0);
+
+    double compensatedTarget = robotRelativeRotations + SHOOTER_OFFSET_ROTATIONS;
+
+    double currentRotations = turret.getAbsoluteTurretRotations();
+    double finalTarget = findBestReachableTarget(compensatedTarget, currentRotations);
+
+    turret.setTarget(finalTarget);
+
+    // Debug
+    SmartDashboard.putNumber("Turret/fieldAngle", fieldRotations);
+    SmartDashboard.putNumber("Turret/robotRelative", robotRelativeRotations);
+    SmartDashboard.putNumber("Turret/compensatedTarget", compensatedTarget);
+    SmartDashboard.putNumber("Turret/finalTarget", finalTarget);
+  }
+
+  public boolean robotIsOnAllianceSide() {
+    Pose2d pose = drive.getPose();
+    return Robot.isBlue()
+        ? pose.getX() < Units.inchesToMeters(182.11)
+        : pose.getX() > Units.inchesToMeters(469.11);
+  }
+
+  public boolean getIsFerrying() {
+    isFerrying = !robotIsOnAllianceSide();
+    return isFerrying;
+  }
+
+  private double findBestReachableTarget(double desiredTarget, double current) {
+    double min = Settings.Turret.Constants.TURRET_MIN_ROTATIONS;
+    double max = Settings.Turret.Constants.TURRET_MAX_ROTATIONS;
+
+    double[] candidates = {
+        desiredTarget,
+        desiredTarget + 1.0,
+        desiredTarget - 1.0
+    };
+
+    double bestTarget = Double.NaN;
+    double shortestDistance = Double.MAX_VALUE;
+
+    for (double candidate : candidates) {
+      if (candidate >= min && candidate <= max) {
+        double distance = Math.abs(candidate - current);
+        if (distance < shortestDistance) {
+          shortestDistance = distance;
+          bestTarget = candidate;
         }
-
-        Rotation2d fieldAngleToTarget = new Rotation2d(dx, dy);
-
-        double fieldRotations = fieldAngleToTarget.getRotations();
-        double robotRotations = robotPose.getRotation().getRotations();
-
-        // Wrap in full 0-1 space so inputModulus works correctly for a full circle.
-        // findBestReachableTarget handles mapping into the actual turret range.
-        double robotRelativeRotations = MathUtil.inputModulus(
-                fieldRotations + robotRotations, 0.0, 1.0);
-
-        double compensatedTarget = robotRelativeRotations + SHOOTER_OFFSET_ROTATIONS;
-
-        double currentRotations = turret.getAbsoluteTurretRotations();
-        double finalTarget = findBestReachableTarget(compensatedTarget, currentRotations);
-
-        turret.setTarget(finalTarget);
-
-        // Debug
-        SmartDashboard.putNumber("Turret/fieldAngle", fieldRotations);
-        SmartDashboard.putNumber("Turret/robotRelative", robotRelativeRotations);
-        SmartDashboard.putNumber("Turret/compensatedTarget", compensatedTarget);
-        SmartDashboard.putNumber("Turret/finalTarget", finalTarget);
+      }
     }
 
-    public boolean robotIsOnAllianceSide() {
-        Pose2d pose = drive.getPose();
-        return Robot.isBlue()
-                ? pose.getX() < Units.inchesToMeters(182.11)
-                : pose.getX() > Units.inchesToMeters(469.11);
+    if (!Double.isNaN(bestTarget)) {
+      return bestTarget;
     }
 
-    public boolean getIsFerrying() {
-        isFerrying = !robotIsOnAllianceSide();
-        return isFerrying;
-    }
+    // Target is in the deadzone — go to whichever hardstop is angularly
+    // closest to where we want to point, accounting for wraparound
+    double distToMin = Math.min(
+        Math.abs(desiredTarget - min),
+        1.0 - Math.abs(desiredTarget - min));
+    double distToMax = Math.min(
+        Math.abs(desiredTarget - max),
+        1.0 - Math.abs(desiredTarget - max));
 
-    private double findBestReachableTarget(double desiredTarget, double current) {
-        double min = Settings.Turret.Constants.TURRET_MIN_ROTATIONS; // 0.0
-        double max = Settings.Turret.Constants.TURRET_MAX_ROTATIONS; // 0.7
-        double mid = (min + max) / 2.0;                              // 0.35
+    return distToMin < distToMax ? min : max;
+  }
 
-        // Full circle equivalents — always 1.0 apart regardless of turret range
-        double[] candidates = {
-            desiredTarget,
-            desiredTarget + 1.0,
-            desiredTarget - 1.0
-        };
-
-        double bestTarget = Double.NaN;
-        double shortestDistance = Double.MAX_VALUE;
-
-        for (double candidate : candidates) {
-            if (candidate >= min && candidate <= max) {
-                double distance = Math.abs(candidate - current);
-                if (distance < shortestDistance) {
-                    shortestDistance = distance;
-                    bestTarget = candidate;
-                }
-            }
-        }
-
-        // Target is reachable — update hysteresis state and return
-        if (!Double.isNaN(bestTarget)) {
-            lastCommittedToMax = bestTarget > mid;
-            return bestTarget;
-        }
-
-        // Target is in the deadzone — use midpoint hysteresis to decide which
-        // hardstop to hold. Only switches sides when current crosses the midpoint,
-        // preventing oscillation near 0 and 0.7.
-        if (current > mid) {
-            lastCommittedToMax = true;
-        } else if (current < mid) {
-            lastCommittedToMax = false;
-        }
-
-        return lastCommittedToMax ? max : min;
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
-    }
+  @Override
+  public boolean isFinished() {
+    return false;
+  }
 }

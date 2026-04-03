@@ -90,13 +90,12 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         robot = new RobotContainer();
-
-        robot.AddVisionMeasurement().schedule();;
     }
 
     @Override
     public void robotPeriodic() {
         SmartDashboard.putData(CommandScheduler.getInstance());
+        robot.AddVisionMeasurement().schedule();
         CommandScheduler.getInstance().run();
     }
 
