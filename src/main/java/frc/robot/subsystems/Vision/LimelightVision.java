@@ -369,6 +369,7 @@ public class LimelightVision extends SubsystemBase {
     SmartDashboard.putNumber("Vision/accepted", accepted);
     SmartDashboard.putBoolean("Vision/anyAccepted", accepted > 0);
     SmartDashboard.putString("Vision/megaTagMode", useMT2 ? "MT2" : "MT1");
+    SmartDashboard.putNumber("Vision/limelightTX", LimelightHelpers.getTX(Cameras.LimelightCameras[0].getName()));
   }
 
   public Optional<PoseEstimate> updatePoseEstimates(AngularVelocity currentAngularVelocity) {
