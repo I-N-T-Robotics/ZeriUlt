@@ -35,9 +35,8 @@ public class Hood extends SubsystemBase {
     }
 
     // Degrees to rotations
-    public void setHoodAngle(double angleDegrees) {
-        targetRotations = Units.degreesToRotations(angleDegrees);
-        hoodMotor.setControl(positionVoltage.withPosition(targetRotations));
+    public void setHoodAngle(double targetRot) {
+        hoodMotor.setControl(positionVoltage.withPosition(targetRot));
     }
 
     public void stowHood() {

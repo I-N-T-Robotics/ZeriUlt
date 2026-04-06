@@ -9,14 +9,18 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.constants.Cameras;
+import frc.robot.constants.Cameras.Camera;
 import frc.robot.subsystems.Vision.LimelightVision;
+import frc.robot.util.vision.LimelightHelpers;
 
 public class Robot extends TimedRobot {
 
     private static Alliance alliance;
 
     public static boolean isBlue() {
-        return alliance == Alliance.Blue;
+        Optional<Alliance> alliance = DriverStation.getAlliance();
+        return alliance.get() == Alliance.Blue;
     }
 
     //TODO: make sure static works here
@@ -90,13 +94,12 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         robot = new RobotContainer();
-
-        robot.AddVisionMeasurement().schedule();;
     }
 
     @Override
     public void robotPeriodic() {
         SmartDashboard.putData(CommandScheduler.getInstance());
+        robot.AddVisionMeasurement().schedule();
         CommandScheduler.getInstance().run();
     }
 
@@ -107,6 +110,7 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledInit() {
         robot.getLimelightVision().setMegaTag2(false);
+        LimelightHelpers.SetIMUMode("limelight-turret", 1);
     }
 
     @Override
@@ -142,6 +146,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
         robot.getLimelightVision().setMegaTag2(true);
+        LimelightHelpers.SetIMUMode("limelight-turret", 3);
 
         if (auto != null) {
             auto.cancel();
@@ -150,6 +155,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
+        SmartDashboard.putNumber("Hub pose x", robot.getGoalPosition().getX());
+        SmartDashboard.putNumber("Hub pose y", robot.getGoalPosition().getY());
+        SmartDashboard.putBoolean("Alliance color blue?",isBlue());
     }
 
     @Override

@@ -139,7 +139,7 @@ public class AutoAim extends Command {
     private final Supplier<Translation2d> targetPoseSupplier;
     private boolean isFerrying = false;
 
-    private static final double SHOOTER_OFFSET_ROTATIONS = 0; // TODO: FIND
+    private static final double SHOOTER_OFFSET_ROTATIONS = 0.5;// + 0.0417; // TODO: FIND
 
     // Tracks which hardstop we last committed to when in the deadzone
     private boolean lastCommittedToMax = false;
@@ -234,7 +234,7 @@ public class AutoAim extends Command {
 
         // Target is in the deadzone — use midpoint hysteresis to decide which
         // hardstop to hold. Only switches sides when current crosses the midpoint,
-        // preventing oscillation near 0 and 0.7.
+        // preventing oscillation near 0 and 0.8.
         if (current > mid) {
             lastCommittedToMax = true;
         } else if (current < mid) {

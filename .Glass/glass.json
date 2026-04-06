@@ -1,5 +1,8 @@
 {
   "NetworkTables": {
+    "Persistent Values": {
+      "open": false
+    },
     "transitory": {
       "Shuffleboard": {
         "open": true
@@ -8,9 +11,15 @@
         "Turret": {
           "open": true
         },
+        "Vision": {
+          "open": true
+        },
         "open": true
       },
       "limelight": {
+        "open": true
+      },
+      "limelight-turret": {
         "open": true
       }
     },
@@ -43,7 +52,7 @@
     "visible": true
   },
   "NetworkTables Settings": {
-    "mode": "Client (NT4)",
+    "mode": "Client (NT3)",
     "serverTeam": "9642"
   }
 }

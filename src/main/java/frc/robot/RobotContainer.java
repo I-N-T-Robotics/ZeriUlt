@@ -132,35 +132,6 @@ public class RobotContainer {
     /***************/
 
     private void configureButtonBindings() {
-        //start intake
-        driver.rightTrigger()
-            .onTrue(new IntakeIntake(intake));
-
-        //stop intake
-        driver.rightBumper()
-            .onTrue(new IntakeStop(intake));
-
-        //outtake
-        driver.leftTrigger()
-            .onTrue(new IntakeOuttake(intake, spindexer));
-
-        // start spindexer, start shooter
-        driver.y()
-            .onTrue(new SpindexerStart(spindexer, turret))
-            .onTrue(new ShooterStart(shooter));
-
-        //stop spindexer, stop shooter
-        driver.a()
-            .onTrue(new SpindexerStop(spindexer))
-            .onTrue(new ShooterStop(shooter));
-
-        //X-mode
-        driver.b()
-            .whileTrue(new SwerveXMode(drivetrain));
-
-        //reset hood
-        driver.start()
-            .onTrue(new HoodReset(hood));
 
 
         testControls.y()
@@ -205,17 +176,18 @@ public class RobotContainer {
 
         AmanController.cross()
             .toggleOnTrue(new ParallelCommandGroup(
-                new ShooterShootTest(shooter),
+                new ShooterShootTest2(shooter),
                 new SpindexerStart(spindexer, turret)
                 //,new HoodAim(hood, drivetrain)
             ));
 
         AmanController.square()
-            .toggleOnTrue(new ParallelCommandGroup(
-                new ShooterShootTest2(shooter),
-                new SpindexerStart(spindexer, turret)
-                //,new HoodAim(hood, drivetrain)
-            ));
+            .whileTrue(new ResetTurret(turret));
+            // .toggleOnTrue(new ParallelCommandGroup(
+            //     new ShooterShootTest2(shooter),
+            //     new SpindexerStart(spindexer, turret)
+            //     //,new HoodAim(hood, drivetrain)
+            // ));
 
         AmanController.triangle()
             .toggleOnTrue(new ParallelCommandGroup(

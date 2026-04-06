@@ -45,8 +45,7 @@ public interface Settings {
             public final double toleranceRotations = Units.degreesToRotations(10);
             public final double TURRET_MIN_ROTATIONS = 0.0;
             public final double TURRET_MAX_ROTATIONS = 0.7;
-            public final double GEAR_RATIO_MOTOR_TO_MECH = 48.57;
-
+            public final double GEAR_RATIO_MOTOR_TO_MECH = 45.33;//48.57;
             public final double STALL_CURRENT_THRESHOLD = 20;
             public final double ZEROING_VOLTAGE = -2.0;
         }
@@ -107,7 +106,7 @@ public interface Settings {
         //in rotations
         public final double FORWARD_SOFT_LIMIT = 0.95;
         public final double REVERSE_SOFT_LIMIT = 0.05;
-        public final double ENCODER_OFFSET = 0;
+        public final double ENCODER_OFFSET = -0.435;
     }
 
     public interface Transition {

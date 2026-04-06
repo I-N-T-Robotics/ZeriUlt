@@ -239,7 +239,7 @@ public interface Field {
     double tag21y = NamedTags.BLUE_HUB_NORTH.getLocation().getY();
 
     //x value is the one on the horizontal to change 
-    Translation2d BLUE_GOAL_CENTER = new Translation2d(Math.abs(tag26x - tag20x), Math.abs(tag18y - tag21y)); 
+    Translation2d BLUE_GOAL_CENTER = new Translation2d(11.919, 4.029); 
     Translation2d RED_GOAL_CENTER = transformToOppositeAlliance(BLUE_GOAL_CENTER);
     Translation2d hubCenter = Robot.isBlue() ?  BLUE_GOAL_CENTER :  RED_GOAL_CENTER;
 
