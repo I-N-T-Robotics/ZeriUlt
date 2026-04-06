@@ -240,44 +240,6 @@ public class AutoAim extends Command {
     return distToMin < distToMax ? min : max;
   }
 
-        // Full circle equivalents — always 1.0 apart regardless of turret range
-        double[] candidates = {
-            desiredTarget,
-            desiredTarget + 1.0,
-            desiredTarget - 1.0
-        };
-
-        double bestTarget = Double.NaN;
-        double shortestDistance = Double.MAX_VALUE;
-
-        for (double candidate : candidates) {
-            if (candidate >= min && candidate <= max) {
-                double distance = Math.abs(candidate - current);
-                if (distance < shortestDistance) {
-                    shortestDistance = distance;
-                    bestTarget = candidate;
-                }
-            }
-        }
-
-        // Target is reachable — update hysteresis state and return
-        if (!Double.isNaN(bestTarget)) {
-            lastCommittedToMax = bestTarget > mid;
-            return bestTarget;
-        }
-
-        // Target is in the deadzone — use midpoint hysteresis to decide which
-        // hardstop to hold. Only switches sides when current crosses the midpoint,
-        // preventing oscillation near 0 and 0.8.
-        if (current > mid) {
-            lastCommittedToMax = true;
-        } else if (current < mid) {
-            lastCommittedToMax = false;
-        }
-
-        return lastCommittedToMax ? max : min;
-    }
-
     @Override
     public boolean isFinished() {
         return false;
