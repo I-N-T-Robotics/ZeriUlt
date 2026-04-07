@@ -139,7 +139,7 @@ public class AutoAim extends Command {
   private final Supplier<Translation2d> targetPoseSupplier;
   private boolean isFerrying = false;
 
-    private static final double SHOOTER_OFFSET_ROTATIONS = 0.5;// + 0.0417; // TODO: FIND
+    private static final double SHOOTER_OFFSET_ROTATIONS = 0.25;// + 0.0417; // TODO: FIND
 
   // Tracks which hardstop we last committed to when in the deadzone
   private boolean lastCommittedToMax = false;
@@ -156,18 +156,19 @@ public class AutoAim extends Command {
     Pose2d robotPose = drive.getPose();
     Translation2d targetPose = targetPoseSupplier.get();
 
-    double dx = targetPose.getX() - robotPose.getX();
-    double dy = targetPose.getY() - robotPose.getY();
+    double dx = targetPose.getX() - (robotPose.getX() - Units.inchesToMeters(5.65));
+    double dy = targetPose.getY() - (robotPose.getY() - Units.inchesToMeters(4.65));
 
-    if (getIsFerrying()) {
-      double vx = drive.getChassisSpeeds().vxMetersPerSecond;
-      double shootWhileMovingFactor = 0.2;
-      dx += vx * shootWhileMovingFactor;
-    }
+    // if (getIsFerrying()) {
+    //   double vx = drive.getChassisSpeeds().vxMetersPerSecond;
+    //   double shootWhileMovingFactor = 0.2;
+    //   dx += vx * shootWhileMovingFactor;
+    // }
 
-    Rotation2d fieldAngleToTarget = new Rotation2d(dx, dy);
+    // Rotation2d fieldAngleToTarget = new Rotation2d(dx, dy);
 
-    double fieldRotations = fieldAngleToTarget.getRotations();
+    // double fieldRotations = fieldAngleToTarget.getRotations();
+    double fieldRotations = Math.atan2(dy, dx);
     double robotRotations = robotPose.getRotation().getRotations();
 
     // Wrap in full 0-1 space so inputModulus works correctly for a full circle.

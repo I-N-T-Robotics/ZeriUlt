@@ -7,11 +7,16 @@ public class ShootInterpolation {
     private static final InterpolatingDoubleTreeMap interpolatingDoubleTreeMap;
 
     private static final double[][] RPMandDistance = {
-        {2.99, 2700.0},
-        {2.15, 2930.0},
-        {2.99, 2640.0}, //good
-        {4.43, 3550.0},
-        {5.66, 3900.0}
+        {46, 2.667},
+        {47, 2.49},//{2640/60, 2.99},
+        {3000/60, 3.06},
+        {3000/60, 3.99},
+        {3300/60, 5.00},
+        // {2.667, 2580.0},
+        // {2.99, 2640.0},
+        // {3.06, 3000.0},
+        // {3.99, 3000.0},
+        // {5.00, 3300.0}
     };
 
     static {

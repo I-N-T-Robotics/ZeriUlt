@@ -5,21 +5,22 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "resetHood"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "resetTurret"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AimTurret"
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "DeployIntake"
+                }
+              }
+            ]
           }
         },
         {
@@ -29,7 +30,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 10.0
+                  "waitTime": 3.0
                 }
               },
               {
@@ -54,15 +55,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "StopShooter"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "HighTide1"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "HighTide1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "StartIntake"
+                }
+              }
+            ]
           }
         },
         {
@@ -78,7 +86,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 10.0
+                  "waitTime": 5.0
                 }
               },
               {
@@ -103,15 +111,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "StopShooter"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Hightide3"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Hightide3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "StartIntake"
+                }
+              }
+            ]
           }
         },
         {

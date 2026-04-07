@@ -1,18 +1,18 @@
 package frc.robot.util;
 
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
-import edu.wpi.first.math.util.Units;
 
 public class HoodInterpolation {
 
     private static final InterpolatingDoubleTreeMap interpolatingDoubleTreeMap;
 
     private static final double[][] AngleandDistance = {
-        {1.22, Units.degreesToRadians(22.5)},
-        {2.15, Units.degreesToRadians(27)},
-        {2.99, 0.2},
-        {4.43, Units.degreesToRadians(39)},
-        {5.66, Units.degreesToRadians(39)}
+        {2.667, 0.2},
+        {2.49, 0.2},//{2.921, 0.2},
+        //{2.99, 0.2},
+        {3.06, 0.2},
+        {3.99, 0.2},
+        {5.00, 0.2},
     };
 
     static {

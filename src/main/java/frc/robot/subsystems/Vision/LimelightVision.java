@@ -337,6 +337,7 @@ public class LimelightVision extends SubsystemBase {
       PoseEstimate estimate = useMT2
           ? LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(name)
           : LimelightHelpers.getBotPoseEstimate_wpiBlue(name);
+        //TODO: Change for red??
 
       // Log per-camera raw data before rejection
       if (estimate != null) {

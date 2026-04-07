@@ -5,21 +5,22 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "resetHood"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "resetTurret"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AimTurret"
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "DeployIntake"
+                }
+              }
+            ]
           }
         },
         {
@@ -29,7 +30,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 10.0
+                  "waitTime": 3.0
                 }
               },
               {
@@ -43,12 +44,6 @@
                 "data": {
                   "name": "StartShooter"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "XMode"
-                }
               }
             ]
           }
@@ -60,15 +55,28 @@
           }
         },
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "StopShooter"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Orbit1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "StartIntake"
+                }
+              }
+            ]
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Orbit1"
+            "name": "StopIntake"
           }
         },
         {
@@ -84,7 +92,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 10.0
+                  "waitTime": 5.0
                 }
               },
               {
@@ -98,12 +106,6 @@
                 "data": {
                   "name": "StartShooter"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "XMode"
-                }
               }
             ]
           }
@@ -115,21 +117,41 @@
           }
         },
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "StopShooter"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Orbit3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "StartIntake"
+                }
+              }
+            ]
           }
         },
         {
-          "type": "path",
+          "type": "race",
           "data": {
-            "pathName": "Orbit3"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Orbit4"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Orbit4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "StartIntake"
+                }
+              }
+            ]
           }
         },
         {

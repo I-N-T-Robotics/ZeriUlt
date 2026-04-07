@@ -5,21 +5,22 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "resetTurret"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "resetHood"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AimTurret"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "DeployIntake"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              }
+            ]
           }
         },
         {
@@ -33,9 +34,9 @@
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "wait",
                 "data": {
-                  "name": "wait"
+                  "waitTime": 5.0
                 }
               },
               {
@@ -60,21 +61,28 @@
           }
         },
         {
-          "type": "path",
+          "type": "race",
           "data": {
-            "pathName": "POBots3"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "POBots3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "StartIntake"
+                }
+              }
+            ]
           }
         },
         {
           "type": "race",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "wait"
-                }
-              },
               {
                 "type": "named",
                 "data": {

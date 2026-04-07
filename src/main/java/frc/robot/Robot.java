@@ -115,6 +115,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
+         SmartDashboard.putNumber("Hub pose x", robot.getGoalPosition().getX());
+        SmartDashboard.putNumber("Hub pose y", robot.getGoalPosition().getY());
+        SmartDashboard.putBoolean("Alliance color blue?", isBlue());
     }
 
     /***********************/
@@ -124,7 +127,8 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         auto = robot.getAutonomousCommand();
-        robot.getLimelightVision().setMegaTag2(true);
+        robot.getLimelightVision().setMegaTag2(false);
+        LimelightHelpers.SetIMUMode("limelight-turret", 3);
 
         if (auto != null) {
             auto.schedule();
@@ -145,7 +149,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        robot.getLimelightVision().setMegaTag2(true);
+        robot.getLimelightVision().setMegaTag2(false);
         LimelightHelpers.SetIMUMode("limelight-turret", 3);
 
         if (auto != null) {

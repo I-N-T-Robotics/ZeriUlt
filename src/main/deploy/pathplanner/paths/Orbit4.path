@@ -25,7 +25,7 @@
       },
       "nextControl": {
         "x": 6.7112310649261175,
-        "y": 1.9591797026488864
+        "y": 1.9591797026488866
       },
       "isLocked": false,
       "linkedName": null
@@ -41,7 +41,7 @@
       },
       "nextControl": {
         "x": 4.585428790656682,
-        "y": 0.6382597530441839
+        "y": 0.638259753044184
       },
       "isLocked": false,
       "linkedName": null
@@ -99,14 +99,7 @@
     }
   ],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "StopIntake",
-      "waypointRelativePos": 2.173685844370866,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.0,
     "maxAcceleration": 4.0,

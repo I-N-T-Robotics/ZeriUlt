@@ -8,6 +8,7 @@ import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -24,7 +25,6 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.Spindexer.SpindexerStart;
 import frc.robot.commands.Spindexer.SpindexerStop;
-import frc.robot.commands.auton.DoNothingAuton;
 import frc.robot.commands.hood.HoodAim;
 import frc.robot.commands.hood.HoodReset;
 import frc.robot.commands.intake.DeployIntake;
@@ -83,19 +83,21 @@ public class RobotContainer {
     public RobotContainer() {
         configureDefaultCommands();
         configureButtonBindings();
-        configureAutons();
-
         NamedCommands.registerCommand("StartIntake", new IntakeIntake(intake));
         NamedCommands.registerCommand("DeployIntake", new DeployIntake(intake));
         NamedCommands.registerCommand("StopIntake", new IntakeStop(intake));
-        NamedCommands.registerCommand("StartSpindexer", new SpindexerStart(spindexer, turret));
+        NamedCommands.registerCommand("StartSpindexer", new SpindexerStart(spindexer, turret, shooter));
         NamedCommands.registerCommand("StopSpindexer", new SpindexerStop(spindexer));
-        NamedCommands.registerCommand("StartShooter", new ShooterStart(shooter));
+        NamedCommands.registerCommand("StartShooter", new ShooterShoot(shooter, drivetrain, turret, () -> getGoalPosition()));
         NamedCommands.registerCommand("StopShooter", new ShooterStop(shooter));
         NamedCommands.registerCommand("AimTurret", new AutoAim(turret, drivetrain, () -> getGoalPosition()));
-        NamedCommands.registerCommand("XMode", new SwerveXMode(drivetrain));
+        //NamedCommands.registerCommand("XMode", new SwerveXMode(drivetrain));
         NamedCommands.registerCommand("resetHood", new HoodReset(hood));
         NamedCommands.registerCommand("resetTurret", new ResetTurret(turret));
+
+        autonChooser = AutoBuilder.buildAutoChooser();
+        SmartDashboard.putData("autoChooser", autonChooser);
+        //configureAutons();
 
         SmartDashboard.putData("Field", Field.FIELD2D);
     }
@@ -105,23 +107,23 @@ public class RobotContainer {
     /****************/
 
     private void configureDefaultCommands() {
-        turret.setDefaultCommand(new AutoAim(turret, drivetrain, () -> getGoalPosition()));
-        // shooter.setDefaultCommand(new ShooterShoot(shooter, drivetrain, turret));
-        // hood.setDefaultCommand(new HoodAim(hood, turret, drivetrain));
+        // turret.setDefaultCommand(new AutoAim(turret, drivetrain, () -> getGoalPosition()));
+        // shooter.setDefaultCommand(new ShooterShoot(shooter, drivetrain, turret, this));
+        hood.setDefaultCommand(new HoodAim(hood, drivetrain, this));
         //TODO: commented out for testing purposes 
         
         // drivetrain.setDefaultCommand(
         // drivetrain.applyRequest(() ->
         //     drive.withVelocityX((-testControls.getLeftY() * MaxSpeed)) // Drive forward with negative Y (forward)
-        //         .withVelocityY((-testControls.getLeftX() * MaxSpeed)) // Drive left with negative X (left)
+        //         .withVelocityY((-testControls.getLeftX() * MaxSpeed/g)) // Drive left with negative X (left)
         //         .withRotationalRate((-testControls.getRightX() * MaxAngularRate)) // Drive counterclockwise with negative X (left)
         // )
         // ); 
 
         drivetrain.setDefaultCommand(
         drivetrain.applyRequest(() ->
-            drive.withVelocityX((AmanController.getLeftY() * MaxSpeed)) // Drive forward with negative Y (forward)
-                .withVelocityY((AmanController.getLeftX() * MaxSpeed)) // Drive left with negative X (left)
+            drive.withVelocityX((-AmanController.getLeftY() * MaxSpeed)) // Drive forward with negative Y (forward)
+                .withVelocityY((-AmanController.getLeftX() * MaxSpeed)) // Drive left with negative X (left)
                 .withRotationalRate((-AmanController.getRightX() * MaxAngularRate)) // Drive counterclockwise with negative X (left)
         )
         ); 
@@ -163,7 +165,7 @@ public class RobotContainer {
                 .andThen(new IntakeIntake(intake)));
 
         AmanController.povUp()
-            .toggleOnTrue(new UndeployIntake(intake));
+            .toggleOnTrue(new IntakeIntake(intake));
 
         AmanController.L1()
             .toggleOnTrue(new IntakeOuttake(intake, spindexer));
@@ -172,39 +174,29 @@ public class RobotContainer {
             .onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
 
         AmanController.R1()
-            .toggleOnTrue(new SwerveXMode(drivetrain));
+            .whileTrue(new ResetTurret(turret));
+        //     .toggleOnTrue(new SwerveXMode(drivetrain));
 
         AmanController.cross()
             .toggleOnTrue(new ParallelCommandGroup(
-                new ShooterShootTest2(shooter),
-                new SpindexerStart(spindexer, turret)
-                //,new HoodAim(hood, drivetrain)
+                new ShooterShoot(shooter, drivetrain, turret, () -> getGoalPosition()),
+                new SpindexerStart(spindexer, turret, shooter)
             ));
 
         AmanController.square()
-            .whileTrue(new ResetTurret(turret));
-            // .toggleOnTrue(new ParallelCommandGroup(
-            //     new ShooterShootTest2(shooter),
-            //     new SpindexerStart(spindexer, turret)
-            //     //,new HoodAim(hood, drivetrain)
-            // ));
+            // .whileTrue(new ResetTurret(turret));
+            .toggleOnTrue(new ParallelCommandGroup(
+                new ShooterShootTest2(shooter),
+                new SpindexerStart(spindexer, turret, shooter)
+                //,new HoodAim(hood, drivetrain)
+            ));
 
         AmanController.triangle()
             .toggleOnTrue(new ParallelCommandGroup(
                 new ShooterShootTest3(shooter),
-                new SpindexerStart(spindexer, turret)
+                new SpindexerStart(spindexer, turret, shooter)
                 //,new HoodAim(hood, drivetrain)
             ));
-    }
-
-    /**************/
-    /*** AUTONS ***/
-    /**************/
-
-    public void configureAutons() {
-        autonChooser.setDefaultOption("Do Nothing", new DoNothingAuton());
-
-        SmartDashboard.putData("Autonomous", autonChooser);
     }
 
     public void configureSysids() {

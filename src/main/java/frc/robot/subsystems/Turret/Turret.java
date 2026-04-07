@@ -226,6 +226,10 @@ public class Turret extends SubsystemBase {
         return Math.abs(getAbsoluteTurretRotations() - targetPositionRotations)
                 < (Units.radiansToDegrees(Settings.Turret.Constants.toleranceRotations) / 360.0);
     }
+
+    public double getTargetPositionRotations() {
+        return targetPositionRotations;
+    }
  
     public void setTarget(double rot) {
         targetPositionRotations = MathUtil.clamp(

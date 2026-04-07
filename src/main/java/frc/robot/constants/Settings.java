@@ -83,7 +83,7 @@ public interface Settings {
         public final double OUTTAKE_RPM = -5000;
         public final double GEAR_RATIO = 1;
 
-        public final double INTAKE_POSITION_TOLERANCE = .05;
+        public final double INTAKE_POSITION_TOLERANCE = .2;
     }
 
     public interface Spindexer {

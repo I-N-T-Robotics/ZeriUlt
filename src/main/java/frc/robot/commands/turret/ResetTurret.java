@@ -16,6 +16,7 @@ public class ResetTurret extends Command {
 
     @Override
     public void execute() {
+        turret.resetToZero();
         turret.driveToHardstop();
     }
 

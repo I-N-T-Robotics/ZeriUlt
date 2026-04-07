@@ -1,25 +1,33 @@
 {
   "NetworkTables": {
-    "Persistent Values": {
-      "open": false
+    "retained": {
+      "SmartDashboard": {
+        "open": true
+      }
     },
     "transitory": {
+      "LiveWindow": {
+        "open": true
+      },
       "Shuffleboard": {
         "open": true
       },
       "SmartDashboard": {
-        "Turret": {
+        "Hood": {
           "open": true
         },
-        "Vision": {
+        "Intake": {
+          "open": true
+        },
+        "Scheduler": {
+          "open": true
+        },
+        "Turret": {
           "open": true
         },
         "open": true
       },
       "limelight": {
-        "open": true
-      },
-      "limelight-turret": {
         "open": true
       }
     },
@@ -27,7 +35,9 @@
       "/FMSInfo": "FMSInfo",
       "/SmartDashboard/Autonomous": "String Chooser",
       "/SmartDashboard/Field": "Field2d",
-      "/SmartDashboard/Scheduler": "Scheduler"
+      "/SmartDashboard/PathPlanner": "Alerts",
+      "/SmartDashboard/Scheduler": "Scheduler",
+      "/SmartDashboard/autoChooser": "String Chooser"
     },
     "windows": {
       "/SmartDashboard/Field": {
@@ -42,6 +52,11 @@
         }
       },
       "/SmartDashboard/Scheduler": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/autoChooser": {
         "window": {
           "visible": true
         }
