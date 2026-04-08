@@ -152,7 +152,7 @@ public class AutoAim extends Command {
   private final Supplier<Translation2d> targetPoseSupplier;
   private boolean isFerrying = false;
 
-    private static final double SHOOTER_OFFSET_ROTATIONS = 0.0; // TODO: FIND
+    private static final double SHOOTER_OFFSET_ROTATIONS = .23; // TODO: FIND
 
   // Tracks which hardstop we last committed to when in the deadzone
   private boolean lastCommittedToMax = false;
@@ -175,9 +175,9 @@ public class AutoAim extends Command {
     Translation2d turretToTarget = targetPose.minus(turretFieldPosition);
     Rotation2d fieldAngleToTarget = turretToTarget.getAngle();
 
-    Rotation2d robotRelativeAngle = fieldAngleToTarget.minus(robotPose.getRotation());
-
-    double robotRelativeRotations = robotRelativeAngle.getRotations();
+    Rotation2d robotRelativeAngle = fieldAngleToTarget.plus(robotPose.getRotation());
+ 
+    double robotRelativeRotations = robotRelativeAngle.getRotations() + SHOOTER_OFFSET_ROTATIONS;
 
     double currentRotations = turret.getAbsoluteTurretRotations();
     double finalTarget = findBestReachableTarget(robotRelativeRotations, currentRotations);

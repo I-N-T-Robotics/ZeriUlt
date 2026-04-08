@@ -41,7 +41,7 @@ public interface Settings {
 
     public interface Turret {
         public interface Constants {
-           public final Translation2d TURRET_OFFSET = new Translation2d(5.65, 4.45);
+           public final Translation2d TURRET_OFFSET = new Translation2d(Units.inchesToMeters(-5.65), Units.inchesToMeters(-4.45));
             public final double toleranceRadians = Units.degreesToRadians(10);
             public final double toleranceRotations = Units.degreesToRotations(10);
             public final double TURRET_MIN_ROTATIONS = 0.0;

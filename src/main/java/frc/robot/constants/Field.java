@@ -239,15 +239,26 @@ public interface Field {
     double tag21y = NamedTags.BLUE_HUB_NORTH.getLocation().getY();
 
     //x value is the one on the horizontal to change 
-    Translation2d RED_GOAL_CENTER = new Translation2d(11.919, 4.029);
-    Translation2d BLUE_GOAL_CENTER = transformToOppositeAlliance(RED_GOAL_CENTER);
-    Translation2d hubCenter = Robot.isBlue() ?  BLUE_GOAL_CENTER :  RED_GOAL_CENTER;
+//     Translation2d RED_GOAL_CENTER = new Translation2d(11.919, 4.029);
+//     Translation2d BLUE_GOAL_CENTER = transformToOppositeAlliance(RED_GOAL_CENTER);
+//     Translation2d hubCenter = Robot.isBlue() ?  BLUE_GOAL_CENTER :  RED_GOAL_CENTER;
 
-    Translation2d BLUE_TOP_FERRY = new Translation2d(2, 6.5);
-    Translation2d RED_TOP_FERRY = new Translation2d(14.3, 6.5);
-    Translation2d topFerry = Robot.isBlue() ? BLUE_TOP_FERRY : RED_TOP_FERRY;
+//     Translation2d BLUE_TOP_FERRY = new Translation2d(2, 6.5);
+//     Translation2d RED_TOP_FERRY = new Translation2d(14.3, 6.5);
+//     Translation2d topFerry = Robot.isBlue() ? BLUE_TOP_FERRY : RED_TOP_FERRY;
 
-    Translation2d BLUE_BOTTOM_FERRY = new Translation2d(2, 1.5);
-    Translation2d RED_BOTTOM_FERRY = new Translation2d(14.3, 1.5);
-    Translation2d bottomFerry = Robot.isBlue() ? BLUE_BOTTOM_FERRY : RED_BOTTOM_FERRY;
+//     Translation2d BLUE_BOTTOM_FERRY = new Translation2d(2, 1.5);
+//     Translation2d RED_BOTTOM_FERRY = new Translation2d(14.3, 1.5);
+//     Translation2d bottomFerry = Robot.isBlue() ? BLUE_BOTTOM_FERRY : RED_BOTTOM_FERRY;
+Translation2d RED_GOAL_CENTER = new Translation2d(11.919, 4.029);
+    Translation2d BLUE_GOAL_CENTER = new Translation2d(11.919, 4.029);
+    Translation2d hubCenter = Robot.isBlue() ?  new Translation2d(11.919, 4.029) :  new Translation2d(11.919, 4.029);
+
+    Translation2d BLUE_TOP_FERRY = new Translation2d(11.919, 4.029);;
+    Translation2d RED_TOP_FERRY = new Translation2d(11.919, 4.029);;
+    Translation2d topFerry = Robot.isBlue() ?new Translation2d(11.919, 4.029) : new Translation2d(11.919, 4.029);;
+
+    Translation2d BLUE_BOTTOM_FERRY = new Translation2d(11.919, 4.029);
+    Translation2d RED_BOTTOM_FERRY = new Translation2d(11.919, 4.029);
+    Translation2d bottomFerry = Robot.isBlue() ? new Translation2d(11.919, 4.029) : new Translation2d(11.919, 4.029);
 }
