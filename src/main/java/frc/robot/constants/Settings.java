@@ -9,6 +9,7 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.AngularVelocity;
@@ -40,7 +41,7 @@ public interface Settings {
 
     public interface Turret {
         public interface Constants {
-           public final Transform2d TURRET_OFFSET = new Transform2d(5.65, 4.45, new Rotation2d(Math.toRadians(90))); //inches
+           public final Translation2d TURRET_OFFSET = new Translation2d(5.65, 4.45);
             public final double toleranceRadians = Units.degreesToRadians(10);
             public final double toleranceRotations = Units.degreesToRotations(10);
             public final double TURRET_MIN_ROTATIONS = 0.0;

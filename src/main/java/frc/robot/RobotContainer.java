@@ -33,12 +33,9 @@ import frc.robot.commands.intake.IntakeOuttake;
 import frc.robot.commands.intake.IntakeStop;
 import frc.robot.commands.intake.UndeployIntake;
 import frc.robot.commands.shooter.ShooterShoot;
-import frc.robot.commands.shooter.ShooterShootTest;
 import frc.robot.commands.shooter.ShooterShootTest2;
 import frc.robot.commands.shooter.ShooterShootTest3;
-import frc.robot.commands.shooter.ShooterStart;
 import frc.robot.commands.shooter.ShooterStop;
-import frc.robot.commands.swerve.SwerveXMode;
 import frc.robot.commands.turret.AutoAim;
 import frc.robot.commands.turret.ResetTurret;
 import frc.robot.constants.Field;
@@ -62,7 +59,6 @@ public class RobotContainer {
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
             
     //Gamepads
-    private final CommandXboxController driver = new CommandXboxController(0);
     private final CommandXboxController testControls = new CommandXboxController(1);
     private final CommandPS5Controller AmanController = new CommandPS5Controller(2);
 
@@ -110,15 +106,6 @@ public class RobotContainer {
         // turret.setDefaultCommand(new AutoAim(turret, drivetrain, () -> getGoalPosition()));
         // shooter.setDefaultCommand(new ShooterShoot(shooter, drivetrain, turret, this));
         hood.setDefaultCommand(new HoodAim(hood, drivetrain, this));
-        //TODO: commented out for testing purposes 
-        
-        // drivetrain.setDefaultCommand(
-        // drivetrain.applyRequest(() ->
-        //     drive.withVelocityX((-testControls.getLeftY() * MaxSpeed)) // Drive forward with negative Y (forward)
-        //         .withVelocityY((-testControls.getLeftX() * MaxSpeed/g)) // Drive left with negative X (left)
-        //         .withRotationalRate((-testControls.getRightX() * MaxAngularRate)) // Drive counterclockwise with negative X (left)
-        // )
-        // ); 
 
         drivetrain.setDefaultCommand(
         drivetrain.applyRequest(() ->

@@ -1,7 +1,5 @@
 package frc.robot.commands.shooter;
 
-import frc.robot.Robot;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.Shooter.Shooter;
 import frc.robot.subsystems.Swerve.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Turret.Turret;
@@ -46,5 +44,10 @@ public class ShooterShoot extends Command {
     @Override
     public boolean isFinished() {
         return false;
+    }
+
+     @Override
+    public void end (boolean interupted) {
+        shooter.setSpeedRPS(0);
     }
 }

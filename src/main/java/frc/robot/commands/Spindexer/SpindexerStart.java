@@ -21,7 +21,7 @@ public class SpindexerStart extends Command {
     public void execute() {
         // if (spindexer.transitionAtSpeed() && turret.atTarget()) {
         //     spindexer.startSpindexer();
-        // }
+        // } //TODO: VISIT
         
         if (spindexer.getIsStalling()) {
             spindexer.reverseSpindexer();

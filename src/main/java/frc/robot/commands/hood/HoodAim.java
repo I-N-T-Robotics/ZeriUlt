@@ -5,7 +5,6 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.Hood.Hood;
 import frc.robot.subsystems.Swerve.CommandSwerveDrivetrain;
 import frc.robot.util.Distance;
-import frc.robot.util.HoodInterpolation;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
