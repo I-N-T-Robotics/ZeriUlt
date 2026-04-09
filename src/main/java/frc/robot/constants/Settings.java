@@ -46,20 +46,20 @@ public interface Settings {
             public final double toleranceRotations = Units.degreesToRotations(10);
             public final double TURRET_MIN_ROTATIONS = 0.0;
             public final double TURRET_MAX_ROTATIONS = 0.7;
-            public final double GEAR_RATIO_MOTOR_TO_MECH = 45.33;//48.57;
+            public final double GEAR_RATIO_MOTOR_TO_MECH = (60.0 / 11.0) * (136.0 / 15.0);
             public final double STALL_CURRENT_THRESHOLD = 20;
             public final double ZEROING_VOLTAGE = -2.0;
         }
 
         public interface SoftwareLimit {
-            public final double FORWARD_MAX_ROTATIONS = 0.7;
-            public final double BACKWARDS_MAX_ROTATIONS = 0;
+            public final double FORWARD_MAX_ROTATIONS = 0.698;
+            public final double BACKWARDS_MAX_ROTATIONS = 0.002;
         }
 
         public interface Encoder {
             //in rotations
             public final double ENCODER_ENCODER_OFFSET = 0.0;
-            public final double ENCODER_TURRET_OFFSET = 0;//-0.656;
+            public final double ENCODER_TURRET_OFFSET = -0.76850390625 - 0.155;//-0.656;
         }
     }
 
@@ -88,7 +88,7 @@ public interface Settings {
     }
 
     public interface Spindexer {
-        public final double SPINDEXER_RPS = 20;
+        public final double SPINDEXER_RPS = 70;
         public final double TRANSITION_TO_SPEED_RATIO = 2.5;
         public final double TRANSITION_MIN_RPS = 40;
         public final double TRANSITION_RPS_TOLERANCE = 5;

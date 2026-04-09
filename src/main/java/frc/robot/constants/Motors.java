@@ -449,7 +449,7 @@ public interface Motors {
         // The TalonFX fuses the CANcoder internally at high frequency — no missed wraps,
         // and position is retained across deploys since the CANcoder is absolute.
  
-        private static final double ROTOR_TO_SENSOR   = 60.0 / 12.0;       // motor rotations per 60T gear rotation
+        private static final double ROTOR_TO_SENSOR   = 60.0 / 11.0;       // fixing dumb ai code
         private static final double SENSOR_TO_MECH    = 136.0 / 14.0;      // 60T gear rotations per turret rotation
  
         public static TalonFXConfig turretConfigs = new TalonFXConfig()
@@ -469,7 +469,7 @@ public interface Motors {
             .withFusedCANcoder(TURRET_ENCODER_TURRET, ROTOR_TO_SENSOR, SENSOR_TO_MECH)
  
             .withSoftLimits(
-                false, false,
+                true, true,
                 Settings.Turret.SoftwareLimit.FORWARD_MAX_ROTATIONS,
                 Settings.Turret.SoftwareLimit.BACKWARDS_MAX_ROTATIONS); //TODO: Software lims are set but disabled?
  

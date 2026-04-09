@@ -22,6 +22,12 @@
         "Scheduler": {
           "open": true
         },
+        "Shooter": {
+          "open": true
+        },
+        "Spindexer": {
+          "open": true
+        },
         "Turret": {
           "open": true
         },

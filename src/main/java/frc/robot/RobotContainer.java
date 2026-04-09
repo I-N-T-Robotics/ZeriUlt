@@ -36,6 +36,7 @@ import frc.robot.commands.shooter.ShooterShoot;
 import frc.robot.commands.shooter.ShooterShootTest2;
 import frc.robot.commands.shooter.ShooterShootTest3;
 import frc.robot.commands.shooter.ShooterStop;
+import frc.robot.commands.swerve.AimAndDrive;
 import frc.robot.commands.turret.AutoAim;
 import frc.robot.commands.turret.ResetTurret;
 import frc.robot.constants.Field;
@@ -184,6 +185,12 @@ public class RobotContainer {
                 new SpindexerStart(spindexer, turret, shooter)
                 //,new HoodAim(hood, drivetrain)
             ));
+
+        AmanController.R3()
+            .toggleOnTrue(new AimAndDrive(drivetrain, 
+            () -> -AmanController.getLeftY(), 
+            () -> -AmanController.getLeftX(), 
+            () -> getGoalPosition()));
     }
 
     public void configureSysids() {
