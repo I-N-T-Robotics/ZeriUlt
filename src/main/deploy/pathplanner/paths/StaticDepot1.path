@@ -1,0 +1,116 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.5159570661896247,
+        "y": 7.271967799642218
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 8.237549194991056,
+        "y": 7.401771019677997
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.677772808586762,
+        "y": 6.393767889087657
+      },
+      "prevControl": {
+        "x": 7.669660107334526,
+        "y": 7.401771019677997
+      },
+      "nextControl": {
+        "x": 7.6797848158585715,
+        "y": 6.143775985565286
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.750787119856888,
+        "y": 4.627227191413238
+      },
+      "prevControl": {
+        "x": 7.718336314847942,
+        "y": 5.600751341681574
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "StaticDepot1"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.21390374331550757,
+      "rotationDegrees": 180.0
+    },
+    {
+      "waypointRelativePos": 0.6737967914438506,
+      "rotationDegrees": -90.0
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.718132854578097,
+      "maxWaypointRelativePos": 2.0,
+      "constraints": {
+        "maxVelocity": 2.6,
+        "maxAcceleration": 1.7,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "DeployIntake",
+      "waypointRelativePos": 0.01795332136445246,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "DeployIntake"
+        }
+      }
+    },
+    {
+      "name": "StartIntake",
+      "waypointRelativePos": 0.4883303411131071,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "StartIntake"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -81.99527114270714
+  },
+  "reversed": false,
+  "folder": "New Folder",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "useDefaultConstraints": true
+}

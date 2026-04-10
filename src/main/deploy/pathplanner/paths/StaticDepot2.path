@@ -1,0 +1,75 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.750787119856888,
+        "y": 4.627227191413238
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 8.068059210526316,
+        "y": 7.256436403508771
+      },
+      "isLocked": false,
+      "linkedName": "StaticDepot1"
+    },
+    {
+      "anchor": {
+        "x": 5.8755592105263155,
+        "y": 7.4006798245614025
+      },
+      "prevControl": {
+        "x": 6.317905701754386,
+        "y": 7.391063596491227
+      },
+      "nextControl": {
+        "x": 4.681530570125343,
+        "y": 7.426636968917945
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.4906469298245617,
+        "y": 6.727543859649122
+      },
+      "prevControl": {
+        "x": 2.78875,
+        "y": 7.487225877192982
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.6792452830188722,
+      "rotationDegrees": 0.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 127.56859202882748
+  },
+  "reversed": false,
+  "folder": "New Folder",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -81.99527114270714
+  },
+  "useDefaultConstraints": true
+}

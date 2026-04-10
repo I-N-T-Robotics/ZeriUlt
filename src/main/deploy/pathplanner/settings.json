@@ -3,15 +3,10 @@
   "robotLength": 0.86995,
   "holonomicMode": true,
   "pathFolders": [
-    "HighTide",
-    "Ferry",
-    "Orbit",
-    "POBots"
+    "New Folder"
   ],
   "autoFolders": [
-    "Ferry",
-    "Middle Autos",
-    "Side Autos"
+    "New Folder"
   ],
   "defaultMaxVel": 4.0,
   "defaultMaxAccel": 4.0,

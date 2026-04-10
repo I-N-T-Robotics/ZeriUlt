@@ -143,6 +143,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Side Autos",
+  "folder": null,
   "choreoAuto": false
 }

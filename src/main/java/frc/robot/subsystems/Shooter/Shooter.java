@@ -19,7 +19,6 @@ public class Shooter extends SubsystemBase {
 
     // Stored in RPS (TalonFX native)
     private double targetRPS;
-    public boolean isShooting;
 
     private final VelocityVoltage velocityRequest = new VelocityVoltage(0).withEnableFOC(true);
 
@@ -32,20 +31,12 @@ public class Shooter extends SubsystemBase {
 
         leftMotor.setControl(new Follower(Motors.ShooterConstants.RIGHT_MOTOR, MotorAlignmentValue.Opposed));
 
-        isShooting = true;
-
         rightMotor.getConfigurator().apply(Motors.ShooterConstants.shooterRightMotorConfig.getConfiguration());
         leftMotor.getConfigurator().apply(Motors.ShooterConstants.shooterLeftMotorConfig.getConfiguration());
     }
 
     public void setSpeedRPS(double rps) {
-        this.targetRPS = rps;
-
-        if (!shooterAtSpeed() && isShooting) {
-            rightMotor.setControl(velocityRequest.withVelocity(rps));
-        } else {
-            isShooting = getRightMotorRPS() > 0;
-        }
+        targetRPS = rps;
     }
 
     public double getRightMotorRPS() {
@@ -57,11 +48,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public void stopShooter() {
-        rightMotor.stopMotor();
-    }
-
-    public void setShooting(boolean shooting) {
-        this.isShooting = shooting;
+        targetRPS = 0;
     }
 
     public double getRightTargetVoltage() {
@@ -79,7 +66,8 @@ public class Shooter extends SubsystemBase {
         SmartDashboard.putNumber("Shooter/LeftRPS", getLeftMotorRPS());
         SmartDashboard.putNumber("Shooter/TargetRPS", targetRPS);
         SmartDashboard.putBoolean("Shooter/atSpeed", shooterAtSpeed());
-        SmartDashboard.putBoolean("Shooter/isShooting", isShooting);
         SmartDashboard.putNumber("Shooter/RightTargetVoltage", getRightTargetVoltage());
+        
+        rightMotor.setControl(velocityRequest.withVelocity(targetRPS));
     }
 }
