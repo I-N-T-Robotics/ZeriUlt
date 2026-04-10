@@ -78,13 +78,13 @@ public interface Settings {
     }
 
     public interface Intake {
-        public final double DEPLOYED_POSITION = 0.227;
+        public final double DEPLOYED_POSITION = 0.22;
         public final double UP_POSITION = 0;
         public final double INTAKE_RPM = 5000;
         public final double OUTTAKE_RPM = -5000;
         public final double GEAR_RATIO = 1;
 
-        public final double INTAKE_POSITION_TOLERANCE = .2;
+        public final double INTAKE_POSITION_TOLERANCE = .02;
     }
 
     public interface Spindexer {
