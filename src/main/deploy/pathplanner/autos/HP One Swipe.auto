@@ -7,19 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Alliance balls 1"
+            "pathName": "HP1 One Swipe"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "hopper"
+            "pathName": "HP2 One Swipe"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoShoot"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Depot Side Autos",
   "choreoAuto": false
 }

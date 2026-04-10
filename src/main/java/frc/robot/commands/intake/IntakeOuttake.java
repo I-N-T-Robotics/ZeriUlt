@@ -19,6 +19,7 @@ public class IntakeOuttake extends Command {
     public void execute() {
         intake.outtake();
         spindexer.reverseSpindexer();
+        spindexer.reverseTransition();  
     }
 
     @Override

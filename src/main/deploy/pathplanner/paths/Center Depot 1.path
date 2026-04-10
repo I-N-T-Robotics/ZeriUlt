@@ -3,65 +3,40 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.5159570661896247,
-        "y": 7.271967799642218
+        "x": 3.5439444444444446,
+        "y": 4.064233333333333
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.237549194991056,
-        "y": 7.401771019677997
+        "x": 3.2907333333333333,
+        "y": 4.132444444444444
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.677772808586762,
-        "y": 6.393767889087657
+        "x": 0.7960111111111112,
+        "y": 5.954655555555556
       },
       "prevControl": {
-        "x": 7.669660107334526,
-        "y": 7.401771019677997
-      },
-      "nextControl": {
-        "x": 7.6797848158585715,
-        "y": 6.143775985565286
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 7.750787119856888,
-        "y": 4.627227191413238
-      },
-      "prevControl": {
-        "x": 7.718336314847942,
-        "y": 5.600751341681574
+        "x": 1.9361111111111118,
+        "y": 6.178777777777778
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "StaticDepot1"
+      "linkedName": "CD1"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.21390374331550757,
-      "rotationDegrees": 180.0
-    },
-    {
-      "waypointRelativePos": 0.6737967914438506,
-      "rotationDegrees": -90.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.718132854578097,
-      "maxWaypointRelativePos": 2.0,
+      "minWaypointRelativePos": 0.6898263027295308,
+      "maxWaypointRelativePos": 1.0,
       "constraints": {
-        "maxVelocity": 2.6,
-        "maxAcceleration": 1.7,
+        "maxVelocity": 2.0,
+        "maxAcceleration": 1.6,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
         "nominalVoltage": 12.0,
@@ -72,8 +47,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "DeployIntake",
-      "waypointRelativePos": 0.01795332136445246,
+      "name": "Deploy",
+      "waypointRelativePos": 0,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -83,8 +58,8 @@
       }
     },
     {
-      "name": "StartIntake",
-      "waypointRelativePos": 0.4883303411131071,
+      "name": "El-Intake",
+      "waypointRelativePos": 0,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -104,10 +79,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -81.99527114270714
+    "rotation": -178.49256424122504
   },
   "reversed": false,
-  "folder": "New Folder",
+  "folder": "Depot Side",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0

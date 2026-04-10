@@ -30,7 +30,7 @@ public class Intake extends SubsystemBase {
 
     public void deploy() {
             intakePivot.setControl(
-                power.withOutput(0.15)
+                power.withOutput(0.5)
             );
             // positionVoltage
             // .withPosition(Settings.Intake.DEPLOYED_POSITION));

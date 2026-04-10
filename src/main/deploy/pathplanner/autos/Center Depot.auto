@@ -7,19 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Get to mid"
+            "pathName": "Center Depot 1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Ferry once"
+            "pathName": "Center Depot 2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoShoot"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Depot Side Autos",
   "choreoAuto": false
 }

@@ -67,6 +67,8 @@ public class Hood extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Hood/TargetAngleDegrees", Units.rotationsToDegrees(targetRotations));
+        SmartDashboard.putNumber("Hood/RawPos", hoodMotor.getPosition().getValueAsDouble());
+        SmartDashboard.putNumber("Hood/ABSRawPos", hoodEncoder.getPosition().getValueAsDouble());
         SmartDashboard.putNumber("Hood/CurrentAngleDegrees", getHoodAngleDegrees());
         SmartDashboard.putBoolean("Hood/isStalling", hoodIsStalling());
         SmartDashboard.putBoolean("Hood/atPosition", hoodAtPosition());

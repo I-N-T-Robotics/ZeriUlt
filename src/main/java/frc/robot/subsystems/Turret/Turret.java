@@ -109,7 +109,7 @@ public class Turret extends SubsystemBase {
         // targetPositionRotations is in turret rotations.
         // FusedCANcoder + SensorToMechanismRatio means the TalonFX PID
         // also operates in turret rotations — no conversion needed.
-        turretMotor.setControl(targetPosition.withPosition(targetPositionRotations));
+       // turretMotor.setControl(targetPosition.withPosition(targetPositionRotations));
     }
  
     // --- SYSID ---

@@ -37,7 +37,7 @@ public class AimAndDrive extends Command {
         this.targetTranslationSupplier = targetTranslationSupplier;
 
         this.omegaController = new PIDController(
-                2,
+                4,
                 0,
                 0);
         
@@ -55,7 +55,7 @@ public class AimAndDrive extends Command {
         Translation2d targetTranslation = targetTranslationSupplier.get();
 
         Translation2d robotToTarget = targetTranslation.minus(currentPose.getTranslation());
-        Rotation2d targetRotation = robotToTarget.getAngle();
+        Rotation2d targetRotation = robotToTarget.getAngle().plus(Rotation2d.fromDegrees(180));
 
         double omegaRadPerSec = omegaController.calculate(
                 currentPose.getRotation().getRadians(),

@@ -59,7 +59,7 @@ public interface Settings {
         public interface Encoder {
             //in rotations
             public final double ENCODER_ENCODER_OFFSET = 0.0;
-            public final double ENCODER_TURRET_OFFSET = -0.76850390625 - 0.155;//-0.656;
+            public final double ENCODER_TURRET_OFFSET = -0.02221;//-0.656;
         }
     }
 
@@ -107,7 +107,7 @@ public interface Settings {
         //in rotations
         public final double FORWARD_SOFT_LIMIT = 0.95;
         public final double REVERSE_SOFT_LIMIT = 0.05;
-        public final double ENCODER_OFFSET = -0.435;
+        public final double ENCODER_OFFSET = -0.4262;
     }
 
     public interface Transition {

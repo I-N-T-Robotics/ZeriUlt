@@ -7,19 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Get to mid"
+            "pathName": "Depot 1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Come Back from mid"
+            "pathName": "Depot 2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoShoot"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Depot Side Autos",
   "choreoAuto": false
 }

@@ -21,18 +21,16 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.Spindexer.SpindexerStart;
 import frc.robot.commands.Spindexer.SpindexerStop;
 import frc.robot.commands.hood.HoodAim;
-import frc.robot.commands.hood.HoodReset;
 import frc.robot.commands.intake.DeployIntake;
 import frc.robot.commands.intake.IntakeIntake;
 import frc.robot.commands.intake.IntakeOuttake;
 import frc.robot.commands.intake.IntakeStop;
-import frc.robot.commands.intake.UndeployIntake;
+import frc.robot.commands.shooter.AutoShoot;
 import frc.robot.commands.shooter.ShooterShoot;
 import frc.robot.commands.shooter.ShooterShootTest2;
 import frc.robot.commands.shooter.ShooterShootTest3;
@@ -59,8 +57,6 @@ public class RobotContainer {
             .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
             
-    //Gamepads
-    private final CommandXboxController testControls = new CommandXboxController(1);
     private final CommandPS5Controller AmanController = new CommandPS5Controller(2);
 
     //subsystems
@@ -84,9 +80,8 @@ public class RobotContainer {
         NamedCommands.registerCommand("StartSpindexer", new SpindexerStart(spindexer, turret, shooter));
         NamedCommands.registerCommand("StopSpindexer", new SpindexerStop(spindexer));
         NamedCommands.registerCommand("StartShooter", new ShooterShoot(shooter, drivetrain, turret, () -> getGoalPosition()));
+        NamedCommands.registerCommand("AutoShoot", new AutoShoot(shooter, spindexer, drivetrain));
         NamedCommands.registerCommand("StopShooter", new InstantCommand(() -> shooter.stopShooter(), shooter));
-        NamedCommands.registerCommand("AimTurret", new AutoAim(turret, drivetrain, () -> getGoalPosition()));
-        //NamedCommands.registerCommand("XMode", new SwerveXMode(drivetrain));
 
         autonChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("autoChooser", autonChooser);
@@ -102,7 +97,7 @@ public class RobotContainer {
     /****************/
 
     private void configureDefaultCommands() {
-         turret.setDefaultCommand(new AutoAim(turret, drivetrain, () -> getGoalPosition()));
+         //turret.setDefaultCommand(new AutoAim(turret, drivetrain, () -> Field.BLUE_GOAL_CENTER)); //TODO FCHANGE FOR MATCH
         // shooter.setDefaultCommand(new ShooterShoot(shooter, drivetrain, turret, this));
         hood.setDefaultCommand(new HoodAim(hood, drivetrain, this));
 
@@ -122,30 +117,6 @@ public class RobotContainer {
     private void configureButtonBindings() {
 
 
-        testControls.y()
-            .whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
-
-        testControls.a()
-            .whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
-
-        testControls.x()
-            .whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
-
-        testControls.b()
-            .whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
-
-        testControls.leftBumper().onTrue(new DeployIntake(intake));
-        testControls.rightBumper().onTrue(new UndeployIntake(intake));
-
-        // testControls.start()
-        //     .whileTrue(new SequentialCommandGroup(
-        //         new DeployIntake(intake),
-        //         new ParallelCommandGroup(
-        //             new IntakeIntake(intake),
-        //             new SpindexerStart(spindexer, turret),
-        //             new ShooterStart(shooter),
-        //             new ShooterShootTest(shooter))));
-
         AmanController.L2()
             .whileTrue(new DeployIntake(intake)
                 .andThen(new IntakeIntake(intake)));
@@ -159,13 +130,11 @@ public class RobotContainer {
         AmanController.povDown()
             .onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
 
-        AmanController.R1()
-            .whileTrue(new ResetTurret(turret));
         //     .toggleOnTrue(new SwerveXMode(drivetrain));
 
         AmanController.cross()
             .toggleOnTrue(new ParallelCommandGroup(
-                new ShooterShoot(shooter, drivetrain, turret, () -> getGoalPosition()),
+                new ShooterShoot(shooter, drivetrain, turret, () -> getGoalPosition()), //TODO FCHANGE FOR MATCH
                 new SpindexerStart(spindexer, turret, shooter)
             ));
 

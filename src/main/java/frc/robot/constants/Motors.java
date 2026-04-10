@@ -449,8 +449,8 @@ public interface Motors {
         // The TalonFX fuses the CANcoder internally at high frequency — no missed wraps,
         // and position is retained across deploys since the CANcoder is absolute.
  
-        private static final double ROTOR_TO_SENSOR   = 60.0 / 11.0;       // fixing dumb ai code
-        private static final double SENSOR_TO_MECH    = 136.0 / 14.0;      // 60T gear rotations per turret rotation
+        private static final double ROTOR_TO_SENSOR   = 60.0 / 14.0;       // fixing dumb ai code
+        private static final double SENSOR_TO_MECH    = 136.0 / 15.0;      // 60T gear rotations per turret rotation
  
         public static TalonFXConfig turretConfigs = new TalonFXConfig()
             .withInvertedValue(InvertedValue.CounterClockwise_Positive)

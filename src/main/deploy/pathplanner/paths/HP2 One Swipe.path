@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.750787119856888,
-        "y": 4.627227191413238
+        "x": 7.724311111111113,
+        "y": 3.4211
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.068059210526316,
-        "y": 7.256436403508771
+        "x": 8.221277777777779,
+        "y": 1.0629444444444438
       },
       "isLocked": false,
-      "linkedName": "StaticDepot1"
+      "linkedName": "HP1"
     },
     {
       "anchor": {
-        "x": 5.8755592105263155,
-        "y": 7.4006798245614025
+        "x": 5.103055555555556,
+        "y": 0.5659777777777777
       },
       "prevControl": {
-        "x": 6.317905701754386,
-        "y": 7.391063596491227
+        "x": 6.613444444444444,
+        "y": 0.546488888888889
       },
       "nextControl": {
-        "x": 4.681530570125343,
-        "y": 7.426636968917945
+        "x": 3.727511251924013,
+        "y": 0.5837267365343134
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.4906469298245617,
-        "y": 6.727543859649122
+        "x": 2.959277777777778,
+        "y": 1.1701333333333321
       },
       "prevControl": {
-        "x": 2.78875,
-        "y": 7.487225877192982
+        "x": 2.988511111111111,
+        "y": 0.546488888888889
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,8 +46,12 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.6792452830188722,
-      "rotationDegrees": 0.0
+      "waypointRelativePos": 0.8979253112033163,
+      "rotationDegrees": 180.0
+    },
+    {
+      "waypointRelativePos": 1.3261410788381693,
+      "rotationDegrees": 180.0
     }
   ],
   "constraintZones": [],
@@ -63,13 +67,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 127.56859202882748
+    "rotation": -120.01836742760908
   },
   "reversed": false,
-  "folder": "New Folder",
+  "folder": "Depot Side",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -81.99527114270714
+    "rotation": 90.0
   },
   "useDefaultConstraints": true
 }

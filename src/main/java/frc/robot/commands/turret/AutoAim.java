@@ -182,7 +182,8 @@ public class AutoAim extends Command {
     double currentRotations = turret.getAbsoluteTurretRotations();
     double finalTarget = findBestReachableTarget(robotRelativeRotations, currentRotations);
 
-    turret.setTarget(finalTarget);
+    //  turret.setTarget(0.67);
+    // turret.setTarget(finalTarget);
 
     // Debug
     SmartDashboard.putNumber("Turret/fieldAngleDeg", fieldAngleToTarget.getDegrees());

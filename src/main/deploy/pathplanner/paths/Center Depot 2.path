@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.4791421602074233,
-        "y": 4.043078261462883
+        "x": 0.7960111111111112,
+        "y": 5.954655555555556
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.819001863529396,
-        "y": 4.036849632159771
+        "x": 1.0855505983623568,
+        "y": 5.882448326538675
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "CD1"
     },
     {
       "anchor": {
-        "x": 2.884,
-        "y": 4.043078261462883
+        "x": 2.6961777777777773,
+        "y": 5.194588888888888
       },
       "prevControl": {
-        "x": 2.6340735436720513,
-        "y": 4.049141794043317
+        "x": 2.473283555933793,
+        "y": 5.307806227969811
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 143.0
   },
   "reversed": false,
-  "folder": "POBots",
+  "folder": "Depot Side",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -178.49256424122504
   },
   "useDefaultConstraints": true
 }
