@@ -17,6 +17,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
@@ -35,7 +36,6 @@ import frc.robot.commands.intake.UndeployIntake;
 import frc.robot.commands.shooter.ShooterShoot;
 import frc.robot.commands.shooter.ShooterShootTest2;
 import frc.robot.commands.shooter.ShooterShootTest3;
-import frc.robot.commands.shooter.ShooterStop;
 import frc.robot.commands.swerve.AimAndDrive;
 import frc.robot.commands.turret.AutoAim;
 import frc.robot.commands.turret.ResetTurret;
@@ -78,23 +78,21 @@ public class RobotContainer {
     // Robot container
 
     public RobotContainer() {
-        configureDefaultCommands();
-        configureButtonBindings();
         NamedCommands.registerCommand("StartIntake", new IntakeIntake(intake));
         NamedCommands.registerCommand("DeployIntake", new DeployIntake(intake));
         NamedCommands.registerCommand("StopIntake", new IntakeStop(intake));
         NamedCommands.registerCommand("StartSpindexer", new SpindexerStart(spindexer, turret, shooter));
         NamedCommands.registerCommand("StopSpindexer", new SpindexerStop(spindexer));
         NamedCommands.registerCommand("StartShooter", new ShooterShoot(shooter, drivetrain, turret, () -> getGoalPosition()));
-        NamedCommands.registerCommand("StopShooter", new ShooterStop(shooter));
+        NamedCommands.registerCommand("StopShooter", new InstantCommand(() -> shooter.stopShooter(), shooter));
         NamedCommands.registerCommand("AimTurret", new AutoAim(turret, drivetrain, () -> getGoalPosition()));
         //NamedCommands.registerCommand("XMode", new SwerveXMode(drivetrain));
-        NamedCommands.registerCommand("resetHood", new HoodReset(hood));
-        NamedCommands.registerCommand("resetTurret", new ResetTurret(turret));
 
         autonChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("autoChooser", autonChooser);
         //configureAutons();
+        configureDefaultCommands();
+        configureButtonBindings();
 
         SmartDashboard.putData("Field", Field.FIELD2D);
     }

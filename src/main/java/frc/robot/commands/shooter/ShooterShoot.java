@@ -33,12 +33,13 @@ public class ShooterShoot extends Command {
 
         double distance = Distance.calculateDistance(robotPose.getX(), robotPose.getY(), targetPose.getX(), targetPose.getY());
 
-        if (turret.getTargetPositionRotations() > 0.7 ||
-            turret.getTargetPositionRotations() < 0.0) {
-                return;
-            } else {
-                shooter.setSpeedRPS(ShootInterpolation.getRPM(distance));
-            }
+        // if (turret.getTargetPositionRotations() > 0.7 ||
+        //     turret.getTargetPositionRotations() < 0.0) {
+        //         return;
+        //     } else {
+        //         shooter.setSpeedRPS(ShootInterpolation.getRPM(distance));
+        //     }
+        shooter.setSpeedRPS(ShootInterpolation.getRPM(distance));
     }
 
     @Override
@@ -48,6 +49,6 @@ public class ShooterShoot extends Command {
 
      @Override
     public void end (boolean interupted) {
-        shooter.setSpeedRPS(0);
+        shooter.stopShooter();;
     }
 }
