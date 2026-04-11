@@ -15,6 +15,7 @@ public class IntakeIntake extends Command {
     @Override
     public void execute() {
         intake.intake();
+        intake.ControlledDeploy();
     }
 
     @Override

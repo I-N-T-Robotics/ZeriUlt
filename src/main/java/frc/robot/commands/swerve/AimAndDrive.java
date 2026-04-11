@@ -55,7 +55,7 @@ public class AimAndDrive extends Command {
         Translation2d targetTranslation = targetTranslationSupplier.get();
 
         Translation2d robotToTarget = targetTranslation.minus(currentPose.getTranslation());
-        Rotation2d targetRotation = robotToTarget.getAngle().plus(Rotation2d.fromDegrees(176));
+        Rotation2d targetRotation = robotToTarget.getAngle().plus(Rotation2d.fromDegrees(178));
 
         double omegaRadPerSec = omegaController.calculate(
                 currentPose.getRotation().getRadians(),

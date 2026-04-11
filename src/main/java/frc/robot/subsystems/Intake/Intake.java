@@ -49,6 +49,13 @@ public class Intake extends SubsystemBase {
             // positionVoltage
             // .withPosition(Settings.Intake.DEPLOYED_POSITION));
     }
+    public void stay() {
+            intakePivot.setControl(
+                power.withOutput(0.03)
+            );
+            // positionVoltage
+            // .withPosition(Settings.Intake.DEPLOYED_POSITION));
+    }
 
     public void ControlledDeploy() {
         intakePivot.setControl(

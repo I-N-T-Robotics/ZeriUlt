@@ -138,7 +138,7 @@ public class RobotContainer {
 
         AmanController.cross()
             .whileTrue(new ParallelCommandGroup(
-                new ShooterShoot(shooter, drivetrain, turret, () -> getGoalPosition()), //TODO FCHANGE FOR MATCH
+                new ShooterShoot(shooter, drivetrain, turret, () -> Field.RED_GOAL_CENTER), //TODO FCHANGE FOR MATCH
                 new SpindexerStart(spindexer, turret, shooter)
             ));
 
