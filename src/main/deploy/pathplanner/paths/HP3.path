@@ -1,0 +1,107 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.959277777777778,
+        "y": 1.1701333333333321
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.5388157894736842,
+        "y": 0.3423684210526312
+      },
+      "isLocked": false,
+      "linkedName": "HP2"
+    },
+    {
+      "anchor": {
+        "x": 6.115964912280702,
+        "y": 0.6597039473684208
+      },
+      "prevControl": {
+        "x": 5.471479888268887,
+        "y": 0.6248669190434581
+      },
+      "nextControl": {
+        "x": 6.4717653508771935,
+        "y": 0.6789364035087715
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.8755592105263155,
+        "y": 3.38109649122807
+      },
+      "prevControl": {
+        "x": 5.702467105263158,
+        "y": 2.746425438596491
+      },
+      "nextControl": {
+        "x": 6.047839269759561,
+        "y": 4.012790041749971
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.000657894736843,
+        "y": 2.5156359649122804
+      },
+      "prevControl": {
+        "x": 6.991041666666666,
+        "y": 3.2753179824561403
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "HP3"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.33647798742138363,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 1.7122641509434007,
+      "rotationDegrees": 90.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "El-Intake",
+      "waypointRelativePos": 0.7594254937163392,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "StartIntake"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -87.95459151111277
+  },
+  "reversed": false,
+  "folder": "Depot Side",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -120.01836742760908
+  },
+  "useDefaultConstraints": true
+}

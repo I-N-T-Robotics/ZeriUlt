@@ -133,7 +133,7 @@ public class RobotContainer {
         //     .toggleOnTrue(new SwerveXMode(drivetrain));
 
         AmanController.cross()
-            .toggleOnTrue(new ParallelCommandGroup(
+            .whileTrue(new ParallelCommandGroup(
                 new ShooterShoot(shooter, drivetrain, turret, () -> getGoalPosition()), //TODO FCHANGE FOR MATCH
                 new SpindexerStart(spindexer, turret, shooter)
             ));

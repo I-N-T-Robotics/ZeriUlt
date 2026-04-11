@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Test1"
+            "pathName": "HP1 One Swipe"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "New Path"
+            "pathName": "HP2 One Swipe"
           }
         },
         {
@@ -23,13 +23,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "StartShooter"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "StartSpindexer"
+                  "name": "AutoShoot"
                 }
               },
               {
@@ -40,11 +34,17 @@
               }
             ]
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HP3"
+          }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "New Folder",
+  "folder": "Depot Side Autos",
   "choreoAuto": false
 }
