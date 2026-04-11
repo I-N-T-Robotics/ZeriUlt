@@ -88,7 +88,7 @@ public interface Settings {
     }
 
     public interface Spindexer {
-        public final double SPINDEXER_RPS = 70;
+        public final double SPINDEXER_RPS = 100;
         public final double TRANSITION_TO_SPEED_RATIO = 2.5;
         public final double TRANSITION_MIN_RPS = 40;
         public final double TRANSITION_RPS_TOLERANCE = 5;

@@ -14,7 +14,7 @@ public class ShooterShootTest3 extends Command {
 
     @Override
     public void execute() {
-        shooter.setSpeedRPS(45);
+        shooter.setSpeedRPS(43);
     }
 
     @Override

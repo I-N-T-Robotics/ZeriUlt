@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.Spindexer.SpindexerStart;
 import frc.robot.commands.Spindexer.SpindexerStop;
 import frc.robot.commands.hood.HoodAim;
+import frc.robot.commands.intake.AutoDeploy;
 import frc.robot.commands.intake.DeployIntake;
 import frc.robot.commands.intake.IntakeIntake;
 import frc.robot.commands.intake.IntakeOuttake;
@@ -76,6 +77,7 @@ public class RobotContainer {
     public RobotContainer() {
         NamedCommands.registerCommand("StartIntake", new IntakeIntake(intake));
         NamedCommands.registerCommand("DeployIntake", new DeployIntake(intake));
+        NamedCommands.registerCommand("AutoDeploy", new AutoDeploy(intake));
         NamedCommands.registerCommand("StopIntake", new IntakeStop(intake));
         NamedCommands.registerCommand("StartSpindexer", new SpindexerStart(spindexer, turret, shooter));
         NamedCommands.registerCommand("StopSpindexer", new SpindexerStop(spindexer));
@@ -118,8 +120,7 @@ public class RobotContainer {
 
 
         AmanController.L2()
-            .whileTrue(new DeployIntake(intake)
-                .andThen(new IntakeIntake(intake)));
+            .whileTrue(new DeployIntake(intake));
 
         AmanController.povUp()
             .toggleOnTrue(new IntakeIntake(intake));
@@ -184,7 +185,7 @@ public class RobotContainer {
     }
 
     public Translation2d getGoalPosition() {
-        if (robotIsOnAllianceSide() && Robot.isHubActive()) {
+        if (robotIsOnAllianceSide()) {
             return Field.hubCenter;
         } else {
             return isInTopSide() ? Field.topFerry : Field.bottomFerry;

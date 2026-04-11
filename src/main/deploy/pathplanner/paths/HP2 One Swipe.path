@@ -32,16 +32,16 @@
     },
     {
       "anchor": {
-        "x": 2.959277777777778,
-        "y": 1.1701333333333321
+        "x": 2.111511111111111,
+        "y": 1.4429777777777781
       },
       "prevControl": {
-        "x": 2.988511111111111,
-        "y": 0.546488888888889
+        "x": 2.140744444444444,
+        "y": 0.819333333333335
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "HP2"
+      "linkedName": null
     }
   ],
   "rotationTargets": [
@@ -52,6 +52,10 @@
     {
       "waypointRelativePos": 1.3261410788381693,
       "rotationDegrees": 180.0
+    },
+    {
+      "waypointRelativePos": 1.65809128630706,
+      "rotationDegrees": -134.0
     }
   ],
   "constraintZones": [],
@@ -67,7 +71,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -120.01836742760908
+    "rotation": -134.0
   },
   "reversed": false,
   "folder": "Depot Side",

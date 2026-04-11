@@ -31,6 +31,7 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.robot.Robot;
 import frc.robot.constants.Field;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 
@@ -286,7 +287,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     }
 
     private double getHubRange() {
-        return getPose().getTranslation().getDistance(Field.RED_GOAL_CENTER);
+        return getPose().getTranslation().getDistance(Robot.isBlue() ? Field.BLUE_GOAL_CENTER : Field.RED_GOAL_CENTER);
     }
 
     private void startSimThread() {

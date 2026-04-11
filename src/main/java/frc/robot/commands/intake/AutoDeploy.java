@@ -4,31 +4,21 @@ import frc.robot.subsystems.Intake.Intake;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class DeployIntake extends Command {
+public class AutoDeploy extends Command {
     private final Intake intake;
 
-    public DeployIntake(Intake intake) {
+    public AutoDeploy(Intake intake) {
         this.intake = intake;
         addRequirements(intake);
     }
 
     @Override
     public void execute() {
-        if (!intake.intakeAtDeployPosition()) {
         intake.deploy();
-
-        }
-        intake.intake();
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
     }
 
     @Override
     public void end(boolean interrupted) {
         intake.stopIntakePivot();
-        intake.stopIntake();
     }
 }
