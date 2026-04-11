@@ -523,8 +523,8 @@ public interface Motors {
                 .withInvertedValue(InvertedValue.Clockwise_Positive)
                 .withNeutralMode(NeutralModeValue.Brake)
  
-                .withSupplyCurrentLimitAmps(60)
-                .withStatorCurrentLimitEnabled(false)
+                .withSupplyCurrentLimitAmps(40)
+                .withStatorCurrentLimitEnabled(true)
                 .withRampRate(0.25)
  
                 .withPIDConstants(Gains.Intake.Pivot.kP, Gains.Intake.Pivot.kI, Gains.Intake.Pivot.kD, 0)

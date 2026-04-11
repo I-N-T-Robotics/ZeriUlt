@@ -58,30 +58,17 @@
     {
       "name": "Deploy",
       "waypointRelativePos": 0,
-      "endWaypointRelativePos": null,
+      "endWaypointRelativePos": 0.30272952853598045,
       "command": {
-        "type": "race",
+        "type": "named",
         "data": {
-          "commands": [
-            {
-              "type": "wait",
-              "data": {
-                "waitTime": 2.0
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "AutoDeploy"
-              }
-            }
-          ]
+          "name": "AutoDeploy"
         }
       }
     },
     {
       "name": "El-Intake",
-      "waypointRelativePos": 0,
+      "waypointRelativePos": 0.35632754342431366,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",

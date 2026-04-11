@@ -73,7 +73,7 @@ public interface Settings {
     }
 
     public interface Shooter {
-        public final double SHOOTER_RPS_TOLERANCE = 5;
+        public final double SHOOTER_RPS_TOLERANCE = 3;
         public final double GEAR_RATIO = 1;
     }
 

@@ -25,7 +25,7 @@ public class ShootInterpolation {
         {56, 5.00},
         {58.7, 5.43},
         {60, 6},
-        {100, 12},
+        {85, 12},
      
     };
 

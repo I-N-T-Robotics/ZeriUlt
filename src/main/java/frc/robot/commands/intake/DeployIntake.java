@@ -14,11 +14,8 @@ public class DeployIntake extends Command {
 
     @Override
     public void execute() {
-        if (!intake.intakeAtDeployPosition()) {
-        intake.deploy();
-
-        }
-        intake.intake();
+         intake.deploy();
+        //intake.ControlledDeploy();
     }
 
     @Override
@@ -29,6 +26,5 @@ public class DeployIntake extends Command {
     @Override
     public void end(boolean interrupted) {
         intake.stopIntakePivot();
-        intake.stopIntake();
     }
 }

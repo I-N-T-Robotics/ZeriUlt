@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.9559343794579167,
-        "y": 6.0
+        "x": 1.5268444444444444,
+        "y": 3.7329222222222214
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.9559343794579167,
-        "y": 6.0
+        "x": 2.526844444444442,
+        "y": 3.7329222222222214
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.5049666666666663,
+        "x": 2.559755555555556,
         "y": 3.7329222222222214
       },
       "prevControl": {
-        "x": 2.5049666666666663,
+        "x": 1.5597555555555558,
         "y": 3.7329222222222214
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "test1"
+      "linkedName": "testoga"
     }
   ],
   "rotationTargets": [],
@@ -37,9 +37,22 @@
       "waypointRelativePos": 0,
       "endWaypointRelativePos": null,
       "command": {
-        "type": "named",
+        "type": "race",
         "data": {
-          "name": "DeployIntake"
+          "commands": [
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 2.0
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "AutoDeploy"
+              }
+            }
+          ]
         }
       }
     },

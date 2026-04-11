@@ -39,6 +39,7 @@ import frc.robot.commands.swerve.AimAndDrive;
 import frc.robot.commands.turret.AutoAim;
 import frc.robot.commands.turret.ResetTurret;
 import frc.robot.constants.Field;
+import frc.robot.constants.Settings;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Hood.Hood;
 import frc.robot.subsystems.Intake.Intake;
@@ -119,10 +120,12 @@ public class RobotContainer {
     private void configureButtonBindings() {
 
 
-        AmanController.L2()
+        // AmanController.L2()
+        //     .whileTrue(new DeployIntake(intake));
+        AmanController.R1()
             .whileTrue(new DeployIntake(intake));
 
-        AmanController.povUp()
+        AmanController.circle()
             .toggleOnTrue(new IntakeIntake(intake));
 
         AmanController.L1()
