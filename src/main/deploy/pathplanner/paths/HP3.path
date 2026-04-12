@@ -101,7 +101,7 @@
   "folder": "Depot Side",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -120.01836742760908
+    "rotation": -123.01800000000001
   },
   "useDefaultConstraints": true
 }

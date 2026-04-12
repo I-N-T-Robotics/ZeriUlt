@@ -59,7 +59,7 @@ public class RobotContainer {
             .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
             
-    private final CommandPS5Controller AmanController = new CommandPS5Controller(2);
+    private final CommandPS5Controller AmanController = new CommandPS5Controller(2); //TODO make autos more to right
 
     //subsystems
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();

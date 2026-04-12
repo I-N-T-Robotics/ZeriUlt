@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7960111111111112,
-        "y": 5.954655555555556
+        "x": 0.7404934210526317,
+        "y": 5.996710526315789
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.0855505983623568,
-        "y": 5.882448326538675
+        "x": 1.0300329083038773,
+        "y": 5.924503297298909
       },
       "isLocked": false,
       "linkedName": "CD1"
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 143.0
+    "rotation": 140.0
   },
   "reversed": false,
   "folder": "Depot Side",
